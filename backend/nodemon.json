@@ -4,6 +4,6 @@
         "src",
         "models"
     ],
-    "ext": "tsc,json",
+    "ext": "ts,json",
     "ignore": ["src/**/*.spec.ts"]
 }
