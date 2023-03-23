@@ -1,0 +1,9 @@
+{
+    "exec": "ts-node --files ./src/main.ts",
+    "watch": [
+        "src",
+        "models"
+    ],
+    "ext": "tsc,json",
+    "ignore": ["src/**/*.spec.ts"]
+}
