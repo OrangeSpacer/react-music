@@ -1,9 +1,9 @@
 import { App } from "./app";
 
 function bootstrap() {
-    const app = new App()
+	const app = new App();
 
-    app.init()
+	app.init();
 }
 
-bootstrap()
+bootstrap();
