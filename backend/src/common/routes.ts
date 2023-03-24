@@ -1,10 +1,10 @@
-import { NextFunction, Request, Response, Router } from "express";
+import { Router } from "express";
 
 const router = Router();
 
-router.get("/registration", (req: Request, res: Response, next: NextFunction) => {
-	res.send("Hello world!");
-});
+router.post("/registration");
 router.post("/login");
+router.post("/logout");
+router.get("/refresh");
 
 export default router;
