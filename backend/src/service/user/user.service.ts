@@ -5,6 +5,7 @@ import { ITokenService } from "../token/token.interface";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { UserDto } from "../../dtos/user.dto";
+import { compare } from "bcrypt";
 
 @injectable()
 export class UserService implements IUserService {
@@ -23,5 +24,23 @@ export class UserService implements IUserService {
 		await this.tokenService.saveToken(userDtoCreate.id, token);
 
 		return { token, user: UserDto };
+	}
+
+	public async login(email: string, password: string): Promise<object> {
+		const possibleUser: any = await User.findOne({ email });
+		if (!possibleUser) {
+			throw console.log("Пользоватей с таким email не найден");
+		}
+		const unhashPassword = await compare(password, possibleUser.password);
+		if (!unhashPassword) {
+			throw console.log("Введен неправильный пароль");
+		}
+		const userDto = new UserDto(possibleUser);
+
+		const token: any = this.tokenService.generateToken({
+			...userDto,
+		});
+		await this.tokenService.saveToken(possibleUser._id, token);
+		return { token, user: userDto };
 	}
 }
