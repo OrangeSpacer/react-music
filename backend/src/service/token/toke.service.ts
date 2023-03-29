@@ -1,8 +1,11 @@
 import Jwt from "jsonwebtoken";
 import { Token } from "../../models/Token";
+import { ITokenService } from "./token.interface";
+import { injectable } from "inversify";
 
-export class TokenService {
-	public generateToken(payload: string | object): object {
+@injectable()
+export class TokenService implements ITokenService {
+	public generateToken(payload: string | object): Object {
 		const accessToken = Jwt.sign(payload, process.env.SECRET_ACCESS as string, {
 			expiresIn: "30m",
 		});
@@ -16,12 +19,12 @@ export class TokenService {
 		};
 	}
 
-	public async saveToken(userId: string, refreshToken: string): Promise<object> {
+	public async saveToken(userId: string, tokens: { refreshToken: string }): Promise<object> {
 		const tokenData = await Token.findOne({ user: userId });
 		if (tokenData) {
-			tokenData.refreshToken = refreshToken;
+			tokenData.refreshToken = tokens.refreshToken;
 		}
-		const token = await Token.create({ refreshToken, user: userId });
+		const token = await Token.create({ refreshToken: tokens.refreshToken, user: userId });
 		return token;
 	}
 
