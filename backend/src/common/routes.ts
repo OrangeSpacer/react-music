@@ -1,10 +1,25 @@
 import { Router } from "express";
+import { inject, injectable } from "inversify";
+import { IRoute } from "./route.interface";
+import "reflect-metadata";
 
-const router = Router();
+@injectable()
+export class Routes {
+	private _router: Router;
+	constructor() {
+		this._router = Router();
+	}
 
-router.post("/registration");
-router.post("/login");
-router.post("/logout");
-router.get("/refresh");
+	get router(): Router {
+		return this._router;
+	}
 
-export default router;
+	public createRoute(routes: IRoute[]): void {
+		for (const route of routes) {
+			const middleware = route.middleware?.map((m) => m.bind(this));
+			const handler = route.func?.bind(this);
+			const pipeline: any = middleware ? [...middleware, handler] : handler;
+			this._router[route.method](route.path, pipeline);
+		}
+	}
+}
