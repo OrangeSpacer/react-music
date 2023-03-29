@@ -1,12 +1,15 @@
 import express, { Express } from "express";
 import { LoggerService } from "./logger/logger.service";
-import routes from "./common/routes";
+// import routes from "./common/routes";
 import { DatabaseService } from "./database/db.service";
 import { DotenvConfigOutput, config } from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { injectable, inject } from "inversify";
 import "reflect-metadata";
+import { TYPES } from "./types";
+import { ILogger } from "./logger/logger.interface";
+import { UserController } from "./controller/user/user.controller";
 
 @injectable()
 export class App {
@@ -15,8 +18,9 @@ export class App {
 	private config: DotenvConfigOutput;
 
 	constructor(
-		@inject("Logger") private logger: LoggerService,
-		@inject("Database") private database: DatabaseService,
+		@inject(TYPES.Logger) private logger: ILogger,
+		@inject(TYPES.Database) private database: DatabaseService,
+		@inject(TYPES.UserController) private userCOntroller: UserController,
 	) {
 		this.port = 5000;
 		this.app = express();
@@ -31,7 +35,7 @@ export class App {
 	}
 
 	private useRoutes(): void {
-		this.app.use("/api", routes);
+		this.app.use("/api", this.userCOntroller.router);
 	}
 
 	public async init(): Promise<void> {
