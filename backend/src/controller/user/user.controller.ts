@@ -15,6 +15,11 @@ export class UserController extends Routes implements IUserController {
 				func: this.registration,
 				method: "post",
 			},
+			{
+				path: "/login",
+				method: "post",
+				func: this.login,
+			},
 		]);
 	}
 	public async registration(req: Request, res: Response, next: NextFunction): Promise<object> {
@@ -23,7 +28,11 @@ export class UserController extends Routes implements IUserController {
 		return res.json(userData);
 	}
 
-	// public login(req: Request, res: Response, next: NextFunction) {}
+	public async login(req: Request, res: Response, next: NextFunction): Promise<object> {
+		const { email, password }: any = req.body;
+		const userData = await this.userService.login(email, password);
+		return res.json(userData);
+	}
 
 	// public logout(req: Request, res: Response, next: NextFunction) {}
 
