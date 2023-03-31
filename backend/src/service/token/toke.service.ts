@@ -23,6 +23,7 @@ export class TokenService implements ITokenService {
 		const tokenData = await Token.findOne({ user: userId });
 		if (tokenData) {
 			tokenData.refreshToken = tokens.refreshToken;
+			return tokenData.save();
 		}
 		const token = await Token.create({ refreshToken: tokens.refreshToken, user: userId });
 		return token;
