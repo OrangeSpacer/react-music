@@ -48,14 +48,14 @@ export class UserController extends Routes implements IUserController {
 		return res.json(userData);
 	}
 
-	public async logout(req: Request, res: Response, next: NextFunction) {
+	public async logout(req: Request, res: Response, next: NextFunction): Promise<object> {
 		const { refreshToken } = req.cookies;
 		const token = await this.userService.logout(refreshToken);
 		res.clearCookie("refreshToken");
 		return res.json(token);
 	}
 
-	public async refreshToken(req: Request, res: Response, next: NextFunction) {
+	public async refreshToken(req: Request, res: Response, next: NextFunction): Promise<object> {
 		const { refreshToken } = req.cookies;
 		const userData: any = await this.userService.refresh(refreshToken);
 		res.cookie("refreshToken", userData.token.refreshToken, {
