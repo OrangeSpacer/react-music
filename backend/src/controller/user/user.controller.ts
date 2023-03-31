@@ -20,6 +20,16 @@ export class UserController extends Routes implements IUserController {
 				method: "post",
 				func: this.login,
 			},
+			{
+				path: "/logout",
+				method: "post",
+				func: this.logout,
+			},
+			{
+				path: "/refresh",
+				method: "get",
+				func: this.refreshToken,
+			},
 		]);
 	}
 	public async registration(req: Request, res: Response, next: NextFunction): Promise<object> {
@@ -30,11 +40,28 @@ export class UserController extends Routes implements IUserController {
 
 	public async login(req: Request, res: Response, next: NextFunction): Promise<object> {
 		const { email, password }: any = req.body;
-		const userData = await this.userService.login(email, password);
+		const userData: any = await this.userService.login(email, password);
+		res.cookie("refreshToken", userData?.token?.refreshToken, {
+			maxAge: 30 * 24 * 60 * 60 * 1000,
+			httpOnly: true,
+		});
 		return res.json(userData);
 	}
 
-	// public logout(req: Request, res: Response, next: NextFunction) {}
+	public async logout(req: Request, res: Response, next: NextFunction) {
+		const { refreshToken } = req.cookies;
+		const token = await this.userService.logout(refreshToken);
+		res.clearCookie("refreshToken");
+		return res.json(token);
+	}
 
-	// public refreshToken(req: Request, res: Response, next: NextFunction) {}
+	public async refreshToken(req: Request, res: Response, next: NextFunction) {
+		const { refreshToken } = req.cookies;
+		const userData: any = await this.userService.refresh(refreshToken);
+		res.cookie("refreshToken", userData.token.refreshToken, {
+			maxAge: 30 * 24 * 60 * 60 * 1000,
+			httpOnly: true,
+		});
+		return res.json(userData);
+	}
 }
