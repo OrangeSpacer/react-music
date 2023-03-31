@@ -3,7 +3,7 @@ import { IUserController } from "./user.interface";
 import { IUserService } from "../../service/user/user.interface";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
-import { Routes } from "../../common/routes";
+import { Routes } from "../../route/routes";
 
 @injectable()
 export class UserController extends Routes implements IUserController {
