@@ -6,6 +6,7 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { UserDto } from "../../dtos/user.dto";
 import { compare } from "bcrypt";
+import { Token } from "../../models/Token";
 
 @injectable()
 export class UserService implements IUserService {
@@ -42,5 +43,26 @@ export class UserService implements IUserService {
 		});
 		await this.tokenService.saveToken(possibleUser._id, token);
 		return { token, user: userDto };
+	}
+
+	public async logout(refreshToken: string): Promise<object> {
+		const token = await Token.deleteOne({ refreshToken });
+		return token;
+	}
+
+	public async refresh(refreshToken: string): Promise<object> {
+		if (!refreshToken) {
+			throw console.log("Токен отсутствует");
+		}
+		const userData: any = this.tokenService.validateRefreshToken(refreshToken);
+		const tokenFromDB = await this.tokenService.findToken(refreshToken);
+		if (!userData || !tokenFromDB) {
+			throw console.log("ошибка");
+		}
+		const user: any = await User.findById(userData.id);
+		const userDto = new UserDto(user);
+		const tokens = this.tokenService.generateToken({ ...userDto });
+
+		return { tokens, userDto };
 	}
 }
