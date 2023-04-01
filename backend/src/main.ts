@@ -10,6 +10,7 @@ import { IUserController } from "./controller/user/user.interface";
 import { UserController } from "./controller/user/user.controller";
 import { IUserService } from "./service/user/user.interface";
 import { UserService } from "./service/user/user.service";
+import { ErrorMiddleware } from "./middleware/error.middleware";
 
 export interface IBootStrapReturn {
 	appContainer: Container;
@@ -22,6 +23,7 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ITokenService>(TYPES.TokenService).to(TokenService).inSingletonScope();
 	bind<IUserService>(TYPES.UserService).to(UserService).inSingletonScope();
 	bind<UserController>(TYPES.UserController).to(UserController).inSingletonScope();
+	bind<ErrorMiddleware>(TYPES.ErrorMiddleWare).to(ErrorMiddleware).inSingletonScope();
 	bind<App>(TYPES.Application).to(App);
 });
 

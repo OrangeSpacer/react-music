@@ -7,15 +7,21 @@ import { TYPES } from "../../types";
 import { UserDto } from "../../dtos/user.dto";
 import { compare } from "bcrypt";
 import { Token } from "../../models/Token";
+import { ApiError } from "../../exceptions/api.error";
 
 @injectable()
 export class UserService implements IUserService {
 	constructor(@inject(TYPES.TokenService) private tokenService: ITokenService) {}
+
+	private checkEmapty(item: any, message: string): void {
+		if (item) {
+			throw ApiError.badRequset(message);
+		}
+	}
 	public async registration(password: string, email: string): Promise<object> {
 		const candidate = await User.findOne({ email });
-		if (candidate) {
-			throw console.log("Данный email уже используется");
-		}
+		this.checkEmapty(candidate, "Пользователь с таким email уже существует");
+
 		const hashPassword = await hash(password, 7);
 		const user: any = await User.create({ email, password: hashPassword });
 
@@ -29,13 +35,11 @@ export class UserService implements IUserService {
 
 	public async login(email: string, password: string): Promise<object> {
 		const possibleUser: any = await User.findOne({ email });
-		if (!possibleUser) {
-			throw console.log("Пользоватей с таким email не найден");
-		}
+		this.checkEmapty(!possibleUser, "Пользователь с таким email не найден");
+
 		const unhashPassword = await compare(password, possibleUser.password);
-		if (!unhashPassword) {
-			throw console.log("Введен неправильный пароль");
-		}
+		this.checkEmapty(!unhashPassword, "Пароль неверен");
+
 		const userDto = new UserDto(possibleUser);
 
 		const token: any = this.tokenService.generateToken({
@@ -52,12 +56,12 @@ export class UserService implements IUserService {
 
 	public async refresh(refreshToken: string): Promise<object> {
 		if (!refreshToken) {
-			throw console.log("Токен отсутствует");
+			throw ApiError.UnathorizedError();
 		}
 		const userData: any = this.tokenService.validateRefreshToken(refreshToken);
 		const tokenFromDB = await this.tokenService.findToken(refreshToken);
 		if (!userData || !tokenFromDB) {
-			throw console.log("ошибка");
+			throw ApiError.UnathorizedError();
 		}
 		const user: any = await User.findById(userData.id);
 		const userDto = new UserDto(user);

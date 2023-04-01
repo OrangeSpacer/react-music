@@ -10,6 +10,7 @@ import "reflect-metadata";
 import { TYPES } from "./types";
 import { ILogger } from "./logger/logger.interface";
 import { UserController } from "./controller/user/user.controller";
+import { ErrorMiddleware } from "./middleware/error.middleware";
 
 @injectable()
 export class App {
@@ -21,6 +22,7 @@ export class App {
 		@inject(TYPES.Logger) private logger: ILogger,
 		@inject(TYPES.Database) private database: DatabaseService,
 		@inject(TYPES.UserController) private userCOntroller: UserController,
+		@inject(TYPES.ErrorMiddleWare) private errorMiddleware: ErrorMiddleware,
 	) {
 		this.port = 5000;
 		this.app = express();
@@ -44,5 +46,6 @@ export class App {
 		await this.database.connect();
 		this.useConfig();
 		this.useRoutes();
+		this.app.use(this.errorMiddleware.exceptions);
 	}
 }

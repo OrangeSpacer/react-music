@@ -5,4 +5,5 @@ export const TYPES = {
 	TokenService: Symbol.for("TokenService"),
 	UserService: Symbol.for("UserService"),
 	UserController: Symbol.for("UserController"),
+	ErrorMiddleWare: Symbol.for("ErrorMiddleware"),
 };
