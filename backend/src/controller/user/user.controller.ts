@@ -6,6 +6,7 @@ import { TYPES } from "../../types";
 import { Routes } from "../../route/routes";
 import { validationResult } from "express-validator";
 import { ApiError } from "../../exceptions/api.error";
+import { Role } from "../../models/Role";
 
 @injectable()
 export class UserController extends Routes implements IUserController {
@@ -32,6 +33,11 @@ export class UserController extends Routes implements IUserController {
 				method: "get",
 				func: this.refreshToken,
 			},
+			// {
+			// 	path: "/createRole",
+			// 	method: "get",
+			// 	func: this.createRole,
+			// },
 		]);
 	}
 
@@ -47,6 +53,7 @@ export class UserController extends Routes implements IUserController {
 			}
 			const { email, password }: any = req.body;
 			const userData = await this.userService.registration(password, email);
+			console.log(userData);
 			return res.json(userData);
 		} catch (e) {
 			next(e);
@@ -107,4 +114,16 @@ export class UserController extends Routes implements IUserController {
 			next(e);
 		}
 	}
+
+	// public async createRole(req: Request, res: Response, next: NextFunction): Promise<void> {
+	// 	try {
+	// 		const user = new Role();
+	// 		const admin = new Role({ type: "ADMIN" });
+	// 		await user.save();
+	// 		await admin.save();
+	// 		res.json({ user: user, admin: admin });
+	// 	} catch (e) {
+	// 		next(e);
+	// 	}
+	// }
 }

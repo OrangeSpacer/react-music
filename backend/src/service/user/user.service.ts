@@ -8,6 +8,7 @@ import { UserDto } from "../../dtos/user.dto";
 import { compare } from "bcrypt";
 import { Token } from "../../models/Token";
 import { ApiError } from "../../exceptions/api.error";
+import { Role } from "../../models/Role";
 
 @injectable()
 export class UserService implements IUserService {
@@ -21,16 +22,15 @@ export class UserService implements IUserService {
 	public async registration(password: string, email: string): Promise<object> {
 		const candidate = await User.findOne({ email });
 		this.checkEmapty(candidate, "Пользователь с таким email уже существует");
-
+		const userRole: { type: string } | null = await Role.findOne({ type: "USER" });
 		const hashPassword = await hash(password, 7);
-		const user: any = await User.create({ email, password: hashPassword });
+		const user: any = await User.create({ email, password: hashPassword, roles: [userRole?.type] });
 
 		const userDtoCreate = new UserDto(user);
-
+		console.log(userDtoCreate);
 		const token: any = this.tokenService.generateToken({ ...userDtoCreate });
 		await this.tokenService.saveToken(userDtoCreate.id, token);
-
-		return { token, user: UserDto };
+		return { token, user: userDtoCreate };
 	}
 
 	public async login(email: string, password: string): Promise<object> {
