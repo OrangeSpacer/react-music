@@ -34,6 +34,7 @@ export class UserService implements IUserService {
 	}
 
 	public async login(email: string, password: string): Promise<object> {
+		console.log(this);
 		const possibleUser: any = await User.findOne({ email });
 		this.checkEmapty(!possibleUser, "Пользователь с таким email не найден");
 

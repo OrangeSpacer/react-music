@@ -4,7 +4,7 @@ import { injectable } from "inversify";
 
 @injectable()
 export class ErrorMiddleware {
-	public exceptions(
+	public exception(
 		err: ErrorRequestHandler,
 		req: Request,
 		res: Response,

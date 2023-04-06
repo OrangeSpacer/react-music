@@ -1,6 +1,4 @@
 import express, { Express } from "express";
-import { LoggerService } from "./logger/logger.service";
-// import routes from "./common/routes";
 import { DatabaseService } from "./database/db.service";
 import { DotenvConfigOutput, config } from "dotenv";
 import cors from "cors";
@@ -11,6 +9,9 @@ import { TYPES } from "./types";
 import { ILogger } from "./logger/logger.interface";
 import { UserController } from "./controller/user/user.controller";
 import { ErrorMiddleware } from "./middleware/error.middleware";
+import multer from "multer";
+import { TrackController } from "./controller/track/track.controller";
+import { ITrackController } from "./controller/track/track.interface";
 
 @injectable()
 export class App {
@@ -22,6 +23,7 @@ export class App {
 		@inject(TYPES.Logger) private logger: ILogger,
 		@inject(TYPES.Database) private database: DatabaseService,
 		@inject(TYPES.UserController) private userCOntroller: UserController,
+		@inject(TYPES.TrackController) private trackController: ITrackController,
 		@inject(TYPES.ErrorMiddleWare) private errorMiddleware: ErrorMiddleware,
 	) {
 		this.port = 5000;
@@ -33,11 +35,12 @@ export class App {
 		this.app.use(express.json());
 		this.app.use(cors());
 		this.app.use(cookieParser());
+		this.app.use(multer({ dest: "uploads" }).any());
 		this.config;
 	}
 
 	private useRoutes(): void {
-		this.app.use("/api", this.userCOntroller.router);
+		this.app.use("/api", [this.userCOntroller.router, this.trackController.add]);
 	}
 
 	public async init(): Promise<void> {
@@ -46,6 +49,6 @@ export class App {
 		await this.database.connect();
 		this.useConfig();
 		this.useRoutes();
-		this.app.use(this.errorMiddleware.exceptions);
+		this.app.use(this.errorMiddleware.exception);
 	}
 }

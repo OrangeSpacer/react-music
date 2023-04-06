@@ -6,7 +6,7 @@ import { TYPES } from "../../types";
 import { Routes } from "../../route/routes";
 import { validationResult } from "express-validator";
 import { ApiError } from "../../exceptions/api.error";
-import { Role } from "../../models/Role";
+import { RoleAdminMiddleware } from "../../middleware/roleAdmin.middleware";
 
 @injectable()
 export class UserController extends Routes implements IUserController {
@@ -33,11 +33,12 @@ export class UserController extends Routes implements IUserController {
 				method: "get",
 				func: this.refreshToken,
 			},
-			// {
-			// 	path: "/createRole",
-			// 	method: "get",
-			// 	func: this.createRole,
-			// },
+			{
+				path: "/createRole",
+				method: "get",
+				middleware: [new RoleAdminMiddleware()],
+				func: this.createRole,
+			},
 		]);
 	}
 
@@ -115,15 +116,15 @@ export class UserController extends Routes implements IUserController {
 		}
 	}
 
-	// public async createRole(req: Request, res: Response, next: NextFunction): Promise<void> {
-	// 	try {
-	// 		const user = new Role();
-	// 		const admin = new Role({ type: "ADMIN" });
-	// 		await user.save();
-	// 		await admin.save();
-	// 		res.json({ user: user, admin: admin });
-	// 	} catch (e) {
-	// 		next(e);
-	// 	}
-	// }
+	public async createRole(req: Request, res: Response, next: NextFunction): Promise<void> {
+		try {
+			// const user = new Role();
+			// const admin = new Role({ type: "ADMIN" });
+			// await user.save();
+			// await admin.save();
+			res.json({ message: "роль создана" });
+		} catch (e) {
+			next(e);
+		}
+	}
 }
