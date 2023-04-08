@@ -7,5 +7,6 @@ export const TYPES = {
 	UserController: Symbol.for("UserController"),
 	TrackService: Symbol.for("TrackService"),
 	TrackController: Symbol.for("TrackController"),
+	FileService: Symbol.for("FileSerivce"),
 	ErrorMiddleWare: Symbol.for("ErrorMiddleware"),
 };

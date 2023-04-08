@@ -15,6 +15,7 @@ import { ITrack } from "./service/track/track.interface";
 import { TrackService } from "./service/track/track.service";
 import { ITrackController } from "./controller/track/track.interface";
 import { TrackController } from "./controller/track/track.controller";
+import { FileService } from "./service/file/file.service";
 
 export interface IBootStrapReturn {
 	appContainer: Container;
@@ -30,6 +31,7 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ITrack>(TYPES.TrackService).to(TrackService).inSingletonScope();
 	bind<ITrackController>(TYPES.TrackController).to(TrackController).inSingletonScope();
 	bind<ErrorMiddleware>(TYPES.ErrorMiddleWare).to(ErrorMiddleware).inSingletonScope();
+	bind<FileService>(TYPES.FileService).to(FileService).inSingletonScope();
 	bind<App>(TYPES.Application).to(App);
 });
 

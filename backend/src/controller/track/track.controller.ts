@@ -4,6 +4,7 @@ import { Routes } from "../../route/routes";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { TrackService } from "../../service/track/track.service";
+import { ApiError } from "../../exceptions/api.error";
 
 @injectable()
 export class TrackController extends Routes implements ITrackController {
@@ -42,20 +43,30 @@ export class TrackController extends Routes implements ITrackController {
 	}
 
 	public async add(req: Request, res: Response, next: NextFunction): Promise<object | void> {
-		const { title, author } = req.body;
-		const files: any = req.files;
-		const trackInfo = files.reduce((acc: any, item: any) => {
-			if (acc[item.fieldname]) {
+		try {
+			const { title, author } = req.body;
+			const files: any = req.files;
+			const { track, image } = files.reduce((acc: any, item: any) => {
 				acc[item.fieldname] = item;
-			}
-			acc[item.fieldname] = item;
-			return acc;
-		});
-		console.log(title, author, trackInfo);
-		// const newTrack = await this.trackService.add(title, author, image, track);
-		res.json({ message: "трек создан" });
+				return acc;
+			}, {});
+			const newTrack = await this.trackService.add(title, author, image, track);
+			res.json(newTrack);
+		} catch (e) {
+			next(e);
+		}
 	}
-	delete(req: Request, res: Response<any, Record<string, any>>, next: NextFunction) {
-		const { id } = req.body;
+	public async delete(
+		req: Request,
+		res: Response<any, Record<string, any>>,
+		next: NextFunction,
+	): Promise<object | void> {
+		try {
+			const { id } = req.body;
+			const deleteTrack = await this.trackService.delete(id);
+			res.json(deleteTrack);
+		} catch (e) {
+			next(e);
+		}
 	}
 }

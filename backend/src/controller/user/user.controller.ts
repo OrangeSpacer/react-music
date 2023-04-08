@@ -54,7 +54,6 @@ export class UserController extends Routes implements IUserController {
 			}
 			const { email, password }: any = req.body;
 			const userData = await this.userService.registration(password, email);
-			console.log(userData);
 			return res.json(userData);
 		} catch (e) {
 			next(e);
