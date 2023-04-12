@@ -12,6 +12,7 @@ import { ErrorMiddleware } from "./middleware/error.middleware";
 import multer from "multer";
 import { TrackController } from "./controller/track/track.controller";
 import { ITrackController } from "./controller/track/track.interface";
+import { PlaylistController } from "./controller/playlist/playlist.controller";
 
 @injectable()
 export class App {
@@ -24,6 +25,7 @@ export class App {
 		@inject(TYPES.Database) private database: DatabaseService,
 		@inject(TYPES.UserController) private userCOntroller: UserController,
 		@inject(TYPES.TrackController) private trackController: TrackController,
+		@inject(TYPES.PlaylistController) private playListController: PlaylistController,
 		@inject(TYPES.ErrorMiddleWare) private errorMiddleware: ErrorMiddleware,
 	) {
 		this.port = 5000;
@@ -41,7 +43,11 @@ export class App {
 	}
 
 	private useRoutes(): void {
-		this.app.use("/api", [this.userCOntroller.router, this.trackController.router]);
+		this.app.use("/api", [
+			this.userCOntroller.router,
+			this.trackController.router,
+			this.playListController.router,
+		]);
 	}
 
 	public async init(): Promise<void> {

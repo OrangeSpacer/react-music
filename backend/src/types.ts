@@ -8,5 +8,7 @@ export const TYPES = {
 	TrackService: Symbol.for("TrackService"),
 	TrackController: Symbol.for("TrackController"),
 	FileService: Symbol.for("FileSerivce"),
+	PlaylistController: Symbol.for("PlaylistController"),
+	PlaylistService: Symbol.for("PlaylistService"),
 	ErrorMiddleWare: Symbol.for("ErrorMiddleware"),
 };

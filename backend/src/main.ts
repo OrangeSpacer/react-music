@@ -16,6 +16,8 @@ import { TrackService } from "./service/track/track.service";
 import { ITrackController } from "./controller/track/track.interface";
 import { TrackController } from "./controller/track/track.controller";
 import { FileService } from "./service/file/file.service";
+import { PlaylistService } from "./service/playlist/playlist.service";
+import { PlaylistController } from "./controller/playlist/playlist.controller";
 
 export interface IBootStrapReturn {
 	appContainer: Container;
@@ -32,6 +34,8 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ITrackController>(TYPES.TrackController).to(TrackController).inSingletonScope();
 	bind<ErrorMiddleware>(TYPES.ErrorMiddleWare).to(ErrorMiddleware).inSingletonScope();
 	bind<FileService>(TYPES.FileService).to(FileService).inSingletonScope();
+	bind<PlaylistController>(TYPES.PlaylistController).to(PlaylistController).inSingletonScope();
+	bind<PlaylistService>(TYPES.PlaylistService).to(PlaylistService).inSingletonScope();
 	bind<App>(TYPES.Application).to(App);
 });
 
