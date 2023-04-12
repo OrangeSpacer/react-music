@@ -1,5 +1,8 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const playListScheme = new Schema({
-	tracks: { type: Array, ref: "Track" },
+	title: { type: String, required: true, unique: true },
+	tracks: { type: Array },
 });
+
+export const PlayList = model("PlayList", playListScheme);
