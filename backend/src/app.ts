@@ -13,6 +13,7 @@ import multer from "multer";
 import { TrackController } from "./controller/track/track.controller";
 import { ITrackController } from "./controller/track/track.interface";
 import { PlaylistController } from "./controller/playlist/playlist.controller";
+import { RoleAdminMiddleware } from "./middleware/roleAdmin.middleware";
 
 @injectable()
 export class App {
@@ -43,11 +44,9 @@ export class App {
 	}
 
 	private useRoutes(): void {
-		this.app.use("/api", [
-			this.userCOntroller.router,
-			this.trackController.router,
-			this.playListController.router,
-		]);
+		this.app.use("/user", this.userCOntroller.router);
+		this.app.use("/track", this.trackController.router);
+		this.app.use("/playlist", new RoleAdminMiddleware().exception, this.playListController.router);
 	}
 
 	public async init(): Promise<void> {

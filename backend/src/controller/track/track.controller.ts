@@ -12,17 +12,17 @@ export class TrackController extends Routes implements ITrackController {
 		super();
 		this.createRoute([
 			{
-				path: "/allTrack",
+				path: "all",
 				method: "get",
 				func: this.getAll,
 			},
 			{
-				path: "/addTrack",
+				path: "/add",
 				method: "post",
 				func: this.add,
 			},
 			{
-				path: "/deleteTrack",
+				path: "/delete",
 				method: "post",
 				func: this.delete,
 			},

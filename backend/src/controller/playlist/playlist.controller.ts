@@ -11,27 +11,27 @@ export class PlaylistController extends Routes implements IPlaylistController {
 		super();
 		this.createRoute([
 			{
-				path: "/playlist/all",
+				path: "/all",
 				method: "get",
 				func: this.getAll,
 			},
 			{
-				path: "/playlist/create",
+				path: "/create",
 				method: "post",
 				func: this.createPlayList,
 			},
 			{
-				path: "/playlist/add",
+				path: "/add",
 				method: "post",
 				func: this.addTrack,
 			},
 			{
-				path: "/playlist/delete",
+				path: "/delete",
 				method: "delete",
 				func: this.deletePlayList,
 			},
 			{
-				path: "/playlist/remove",
+				path: "/remove",
 				method: "delete",
 				func: this.deleteTrack,
 			},
