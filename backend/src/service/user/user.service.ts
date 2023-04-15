@@ -9,10 +9,15 @@ import { compare } from "bcrypt";
 import { Token } from "../../models/Token";
 import { ApiError } from "../../exceptions/api.error";
 import { Role } from "../../models/Role";
+import { ITrack } from "../track/track.interface";
+import { PlayList } from "../../models/PlayList";
 
 @injectable()
 export class UserService implements IUserService {
-	constructor(@inject(TYPES.TokenService) private tokenService: ITokenService) {}
+	constructor(
+		@inject(TYPES.TokenService) private tokenService: ITokenService,
+		@inject(TYPES.TrackService) private trackService: ITrack,
+	) {}
 
 	private checkEmapty(item: any, message: string): void {
 		if (item) {
@@ -27,14 +32,12 @@ export class UserService implements IUserService {
 		const user: any = await User.create({ email, password: hashPassword, roles: [userRole?.type] });
 
 		const userDtoCreate = new UserDto(user);
-		console.log(userDtoCreate);
 		const token: any = this.tokenService.generateToken({ ...userDtoCreate });
 		await this.tokenService.saveToken(userDtoCreate.id, token);
 		return { token, user: userDtoCreate };
 	}
 
 	public async login(email: string, password: string): Promise<object> {
-		console.log(this);
 		const possibleUser: any = await User.findOne({ email });
 		this.checkEmapty(!possibleUser, "Пользователь с таким email не найден");
 
@@ -69,5 +72,65 @@ export class UserService implements IUserService {
 		const tokens = this.tokenService.generateToken({ ...userDto });
 
 		return { tokens, userDto };
+	}
+
+	public async getInfo(refreshToken: string) {
+		if (!refreshToken) {
+			throw ApiError.UnathorizedError();
+		}
+		const { refreshToken: token }: any = await this.tokenService.findToken(refreshToken);
+		const userData = await this.tokenService.validateRefreshToken(token);
+		return userData;
+	}
+
+	public async getFavoritesTracKs(userId: string) {
+		const userTracks = await User.findById(userId);
+		return userTracks?.favoritesTrack;
+	}
+
+	public async addFavoritesTracK(trackId: string, userId: string) {
+		const { _id }: any = await this.trackService.getForId(trackId);
+		const user = await User.findById(userId);
+		if (user?.favoritesTrack.indexOf(_id) != -1) {
+			throw ApiError.badRequset("Этот трек уже добавлен в любимые");
+		}
+		user?.favoritesTrack.push(_id);
+		await user?.save();
+		return user;
+	}
+
+	public async deleteFavoritesTrack(trackId: string, userId: string) {
+		const track: any = await this.trackService.getForId(trackId);
+		console.log(track);
+		const user = await User.findById(userId);
+		const index = user?.favoritesTrack.findIndex((item) => item.toString() == track._id);
+		if (index == -1 || index == undefined) {
+			throw ApiError.badRequset("Не удалось найти трек");
+		} else {
+			user?.favoritesTrack.splice(index, 1);
+			await user?.save();
+			return user;
+		}
+	}
+
+	public async addPlaylist(playlistId: string, userId: string) {
+		const playlist = await PlayList.findById(playlistId);
+		const user = await User.findById(userId);
+		user?.playLists.push(playlist);
+		await user?.save();
+		return user;
+	}
+
+	public async deletePlaylist(playlistId: string, userId: string) {
+		const playlist: any = await PlayList.findById(playlistId);
+		const user = await User.findById(userId);
+		const index = user?.playLists.findIndex((item) => item._id == playlist._id);
+		if (index == -1 || index == undefined) {
+			ApiError.badRequset("Не удалось найти плейлист");
+		} else {
+			user?.playLists.splice(index, 1);
+			await user?.save();
+			return user;
+		}
 	}
 }
