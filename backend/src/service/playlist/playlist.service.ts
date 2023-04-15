@@ -15,6 +15,11 @@ export class PlaylistService implements IPlaylisrService {
 		const playlists = await PlayList.find();
 		return playlists;
 	}
+
+	public async getForId(playlistId: string): Promise<Object | null> {
+		const playlist = await PlayList.findById(playlistId);
+		return playlist;
+	}
 	public async createPlaylist(title: string): Promise<object> {
 		const candidatePlaylist = await PlayList.findOne({ title });
 		this.check(candidatePlaylist, "Плейлист с таким названием уже существует");
