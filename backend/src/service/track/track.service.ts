@@ -19,6 +19,11 @@ export class TrackService implements ITrack {
 		return tracks;
 	}
 
+	public async getForId(id: string): Promise<Object | null> {
+		const track = await Track.findById(id);
+		return track;
+	}
+
 	public async add(title: string, author: string, image: any, track: any): Promise<object> {
 		const candidateTrack = await Track.findOne({ title });
 		this.errorChecker(candidateTrack, "Трек с таким названием уже существует");
