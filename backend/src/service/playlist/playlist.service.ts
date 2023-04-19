@@ -20,26 +20,34 @@ export class PlaylistService implements IPlaylisrService {
 		const playlist = await PlayList.findById(playlistId);
 		return playlist;
 	}
-	public async createPlaylist(title: string): Promise<object> {
+	public async createPlaylist(title: string, author: string): Promise<object> {
 		const candidatePlaylist = await PlayList.findOne({ title });
 		this.check(candidatePlaylist, "Плейлист с таким названием уже существует");
-		const playList = await PlayList.create({ title, tracks: [] });
+		const playList = await PlayList.create({ title, author, tracks: [] });
 		return playList;
 	}
-	public async deletePlayList(id: string): Promise<string> {
-		const candidateDeletePlaylist = await PlayList.find({ _id: id });
+	public async deletePlayList(id: string, authorPlaylist: string): Promise<string> {
+		const candidateDeletePlaylist: any = await PlayList.findOne({ _id: id });
+		console.log(candidateDeletePlaylist);
+		if (candidateDeletePlaylist.author != authorPlaylist) {
+			throw ApiError.badRequset("У вас нет прав для выполнения данного действия");
+		}
 		this.check(!candidateDeletePlaylist, "Не удалось найти плейлист");
 		await PlayList.deleteOne({ _id: id });
 		return "Плейлист успешно удален";
 	}
-	public async addTrack(idPlaylist: string, idTrack: string): Promise<object | null> {
+	public async addTrack(
+		idPlaylist: string,
+		idTrack: string,
+		authorPlaylist: string,
+	): Promise<object | null> {
 		const candidateTrack = await Track.findOne({ _id: idTrack });
 		console.log(candidateTrack);
 		this.check(!candidateTrack, "Не удалось найти трек");
 		const candidatePlaylist = await PlayList.findOne({ _id: idPlaylist });
-		console.log(
-			candidatePlaylist?.tracks.indexOf((track: any) => track.title == candidateTrack?.title),
-		);
+		if (candidatePlaylist?.author != authorPlaylist) {
+			throw ApiError.badRequset("У вас нет прав для выполнения данного действия");
+		}
 		this.check(!candidatePlaylist, "Не удалось найти плейлист");
 		if (
 			candidatePlaylist?.tracks.indexOf((track: any) => track.title != candidateTrack?.title) != -1
@@ -50,16 +58,23 @@ export class PlaylistService implements IPlaylisrService {
 		candidatePlaylist?.save();
 		return candidatePlaylist;
 	}
-	public async deleteTrack(idPlaylist: string, idTrack: string): Promise<string | null> {
+	public async deleteTrack(
+		idPlaylist: string,
+		idTrack: string,
+		authorPlaylist: string,
+	): Promise<string | null> {
 		const candidateTrack = await Track.findOne({ _id: idTrack });
 		this.check(!candidateTrack, "Не удалось найти трек");
 		const candidatePlaylist = await PlayList.findOne({ _id: idPlaylist });
+		if (candidatePlaylist?.author != authorPlaylist) {
+			throw ApiError.badRequset("У вас нет прав для выполнения данного действия");
+		}
 		this.check(!candidatePlaylist, "Не удалось найти плейлист");
 		const trackIndex = candidatePlaylist?.tracks.indexOf(
 			(track: any) => track.title != candidateTrack?.title,
 		);
 		if (!trackIndex) {
-			throw ApiError.badRequset("Данный отсутствует");
+			throw ApiError.badRequset("Данный трек отсутствует");
 		}
 		candidatePlaylist?.tracks.splice(trackIndex, 1);
 		candidatePlaylist?.save();

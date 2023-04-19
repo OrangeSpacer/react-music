@@ -24,18 +24,28 @@ export class TrackService implements ITrack {
 		return track;
 	}
 
-	public async add(title: string, author: string, image: any, track: any): Promise<object> {
+	public async add(
+		title: string,
+		author: string,
+		image: any,
+		track: any,
+		creator: string,
+	): Promise<object> {
 		const candidateTrack = await Track.findOne({ title });
 		this.errorChecker(candidateTrack, "Трек с таким названием уже существует");
 		const trackPath = this.fileService.createFile(track, TYPE_FILE.AUDIO);
 		const imagePath = this.fileService.createFile(image, TYPE_FILE.IMAGE);
-		const trackData = await Track.create({ title, author, imagePath, trackPath });
+		const trackData = await Track.create({ title, author, creator, imagePath, trackPath });
 		console.log(trackData);
 		return trackData;
 	}
 
-	public async delete(id: string): Promise<string> {
+	public async delete(id: string, author: string): Promise<string> {
 		const deleteCandidateTrack = await Track.findById(id);
+		console.log(author);
+		if (deleteCandidateTrack?.creator != author) {
+			throw ApiError.badRequset("У вас нет прав для выполнения данного действия");
+		}
 		if (!deleteCandidateTrack) {
 			throw ApiError.badRequset("Не удалось найти трек");
 		}
