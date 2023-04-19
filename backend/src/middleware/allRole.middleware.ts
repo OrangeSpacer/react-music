@@ -1,13 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../exceptions/api.error";
-import { inject, injectable } from "inversify";
-import { TYPES } from "../types";
-import { ITokenService } from "../service/token/token.interface";
-
-@injectable()
-export class AuthMiddleware {
-	constructor(@inject(TYPES.TokenService) private tokenService: ITokenService) {}
-	public exception(req: Request, res: Response, next: NextFunction): void {
+import Jwt from "jsonwebtoken";
+export class AllRoleMiddleware {
+	exception(req: Request, res: Response, next: NextFunction): void {
 		try {
 			const authorizationHeader = req.headers.authorization;
 			if (!authorizationHeader) {
@@ -18,15 +13,13 @@ export class AuthMiddleware {
 			if (accessToken == "undefined") {
 				return next(ApiError.UnathorizedError());
 			}
-			const userData = this.tokenService.validateAccessToken(accessToken);
+			const userData: any = Jwt.verify(accessToken, process.env.SECRET_ACCESS as string);
 			if (!userData) {
 				return next(ApiError.UnathorizedError());
 			}
-
-			req.user = userData;
 			next();
 		} catch (e) {
-			return next(ApiError.UnathorizedError());
+			return next(ApiError.badRequset("Что-то пошло не так", e));
 		}
 	}
 }
