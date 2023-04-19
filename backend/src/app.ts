@@ -11,9 +11,9 @@ import { UserController } from "./controller/user/user.controller";
 import { ErrorMiddleware } from "./middleware/error.middleware";
 import multer from "multer";
 import { TrackController } from "./controller/track/track.controller";
-import { ITrackController } from "./controller/track/track.interface";
 import { PlaylistController } from "./controller/playlist/playlist.controller";
-import { RoleAdminMiddleware } from "./middleware/roleAdmin.middleware";
+import { AllRoleMiddleware } from "./middleware/allRole.middleware";
+import { FavoritesController } from "./controller/favorites/favorites.controller";
 
 @injectable()
 export class App {
@@ -27,6 +27,7 @@ export class App {
 		@inject(TYPES.UserController) private userCOntroller: UserController,
 		@inject(TYPES.TrackController) private trackController: TrackController,
 		@inject(TYPES.PlaylistController) private playListController: PlaylistController,
+		@inject(TYPES.FavoritesController) private favoritesController: FavoritesController,
 		@inject(TYPES.ErrorMiddleWare) private errorMiddleware: ErrorMiddleware,
 	) {
 		this.port = 5000;
@@ -45,8 +46,9 @@ export class App {
 
 	private useRoutes(): void {
 		this.app.use("/user", this.userCOntroller.router);
-		this.app.use("/track", this.trackController.router);
-		this.app.use("/playlist", new RoleAdminMiddleware().exception, this.playListController.router);
+		this.app.use("/track", new AllRoleMiddleware().exception, this.trackController.router);
+		this.app.use("/favorites", new AllRoleMiddleware().exception, this.favoritesController.router);
+		this.app.use("/playlist", new AllRoleMiddleware().exception, this.playListController.router);
 	}
 
 	public async init(): Promise<void> {

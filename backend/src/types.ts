@@ -10,5 +10,7 @@ export const TYPES = {
 	FileService: Symbol.for("FileSerivce"),
 	PlaylistController: Symbol.for("PlaylistController"),
 	PlaylistService: Symbol.for("PlaylistService"),
+	FavoritesController: Symbol.for("FavoritesController"),
+	FavoritesService: Symbol.for("FavoritesService"),
 	ErrorMiddleWare: Symbol.for("ErrorMiddleware"),
 };

@@ -4,9 +4,8 @@ import { DatabaseService } from "./database/db.service";
 import { LoggerService } from "./logger/logger.service";
 import { TYPES } from "./types";
 import { ITokenService } from "./service/token/token.interface";
-import { TokenService } from "./service/token/toke.service";
+import { TokenService } from "./service/token/token.service";
 import { ILogger } from "./logger/logger.interface";
-import { IUserController } from "./controller/user/user.interface";
 import { UserController } from "./controller/user/user.controller";
 import { IUserService } from "./service/user/user.interface";
 import { UserService } from "./service/user/user.service";
@@ -18,6 +17,8 @@ import { TrackController } from "./controller/track/track.controller";
 import { FileService } from "./service/file/file.service";
 import { PlaylistService } from "./service/playlist/playlist.service";
 import { PlaylistController } from "./controller/playlist/playlist.controller";
+import { FavoritesController } from "./controller/favorites/favorites.controller";
+import { FavoritesService } from "./service/favorites/favorites.service";
 
 export interface IBootStrapReturn {
 	appContainer: Container;
@@ -36,6 +37,8 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<FileService>(TYPES.FileService).to(FileService).inSingletonScope();
 	bind<PlaylistController>(TYPES.PlaylistController).to(PlaylistController).inSingletonScope();
 	bind<PlaylistService>(TYPES.PlaylistService).to(PlaylistService).inSingletonScope();
+	bind<FavoritesController>(TYPES.FavoritesController).to(FavoritesController).inSingletonScope();
+	bind<FavoritesService>(TYPES.FavoritesService).to(FavoritesService);
 	bind<App>(TYPES.Application).to(App);
 });
 
