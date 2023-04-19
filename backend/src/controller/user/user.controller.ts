@@ -34,12 +34,33 @@ export class UserController extends Routes implements IUserController {
 				func: this.refreshToken,
 			},
 			{
+				path: "/info",
+				method: "get",
+				func: this.getInfo,
+			},
+			{
+				path: "/playlist/add",
+				method: "post",
+				func: this.addPlaylist,
+			},
+			{
+				path: "/playlist/remove",
+				method: "delete",
+				func: this.deletePlaylist,
+			},
+			{
 				path: "/createRole",
 				method: "get",
 				middleware: [new RoleAdminMiddleware()],
 				func: this.createRole,
 			},
 		]);
+	}
+
+	public async getInfo(req: Request, res: Response, next: NextFunction) {
+		const { refreshToken } = req.cookies;
+		const user = await this.userService.getInfo(refreshToken);
+		res.json(user);
 	}
 
 	public async registration(
@@ -110,6 +131,30 @@ export class UserController extends Routes implements IUserController {
 				httpOnly: true,
 			});
 			return res.json(userData);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	public async addPlaylist(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { refreshToken } = req.cookies;
+			const { playlistId } = req.body;
+			const { id }: any = await this.userService.getInfo(refreshToken);
+			const playlist = await this.userService.addPlaylist(playlistId, id);
+			res.json(playlist);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	public async deletePlaylist(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { refreshToken } = req.cookies;
+			const { playlistId }: any = req.query;
+			const { id }: any = await this.userService.getInfo(refreshToken);
+			const playlist = await this.userService.deletePlaylist(playlistId, id);
+			res.json(playlist);
 		} catch (e) {
 			next(e);
 		}

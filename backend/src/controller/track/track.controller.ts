@@ -4,15 +4,19 @@ import { Routes } from "../../route/routes";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { TrackService } from "../../service/track/track.service";
-import { ApiError } from "../../exceptions/api.error";
-
+import { RoleAdminMiddleware } from "../../middleware/roleAdmin.middleware";
+import { AllRoleMiddleware } from "../../middleware/allRole.middleware";
+import { IUserService } from "../../service/user/user.interface";
 @injectable()
 export class TrackController extends Routes implements ITrackController {
-	constructor(@inject(TYPES.TrackService) private trackService: TrackService) {
+	constructor(
+		@inject(TYPES.TrackService) private trackService: TrackService,
+		@inject(TYPES.UserService) private userService: IUserService,
+	) {
 		super();
 		this.createRoute([
 			{
-				path: "all",
+				path: "/all",
 				method: "get",
 				func: this.getAll,
 			},
@@ -23,8 +27,14 @@ export class TrackController extends Routes implements ITrackController {
 			},
 			{
 				path: "/delete",
-				method: "post",
+				method: "delete",
+				// middleware: [new AllRoleMiddleware()],
 				func: this.delete,
+			},
+			{
+				path: "/get",
+				method: "post",
+				func: this.getForId,
 			},
 		]);
 	}
@@ -44,13 +54,13 @@ export class TrackController extends Routes implements ITrackController {
 
 	public async add(req: Request, res: Response, next: NextFunction): Promise<object | void> {
 		try {
-			const { title, author } = req.body;
+			const { title, author, creator } = req.body;
 			const files: any = req.files;
 			const { track, image } = files.reduce((acc: any, item: any) => {
 				acc[item.fieldname] = item;
 				return acc;
 			}, {});
-			const newTrack = await this.trackService.add(title, author, image, track);
+			const newTrack = await this.trackService.add(title, author, image, track, creator);
 			res.json(newTrack);
 		} catch (e) {
 			next(e);
@@ -62,9 +72,21 @@ export class TrackController extends Routes implements ITrackController {
 		next: NextFunction,
 	): Promise<object | void> {
 		try {
-			const { id } = req.body;
-			const deleteTrack = await this.trackService.delete(id);
+			const { refreshToken } = req.cookies;
+			const { id } = req.query;
+			const { id: idForToken }: any = await this.userService.getInfo(refreshToken);
+			const deleteTrack = await this.trackService.delete(id as string, idForToken);
 			res.json(deleteTrack);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	public async getForId(req: Request, res: Response, next: NextFunction): Promise<void> {
+		try {
+			const { id }: any = req.query;
+			const track = await this.trackService.getForId(id);
+			res.json(track);
 		} catch (e) {
 			next(e);
 		}
