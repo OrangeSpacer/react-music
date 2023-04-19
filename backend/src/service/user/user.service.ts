@@ -79,38 +79,8 @@ export class UserService implements IUserService {
 			throw ApiError.UnathorizedError();
 		}
 		const { refreshToken: token }: any = await this.tokenService.findToken(refreshToken);
-		const userData = await this.tokenService.validateRefreshToken(token);
+		const userData: any = await this.tokenService.validateRefreshToken(token);
 		return userData;
-	}
-
-	public async getFavoritesTracKs(userId: string) {
-		const userTracks = await User.findById(userId);
-		return userTracks?.favoritesTrack;
-	}
-
-	public async addFavoritesTracK(trackId: string, userId: string) {
-		const { _id }: any = await this.trackService.getForId(trackId);
-		const user = await User.findById(userId);
-		if (user?.favoritesTrack.indexOf(_id) != -1) {
-			throw ApiError.badRequset("Этот трек уже добавлен в любимые");
-		}
-		user?.favoritesTrack.push(_id);
-		await user?.save();
-		return user;
-	}
-
-	public async deleteFavoritesTrack(trackId: string, userId: string) {
-		const track: any = await this.trackService.getForId(trackId);
-		console.log(track);
-		const user = await User.findById(userId);
-		const index = user?.favoritesTrack.findIndex((item) => item.toString() == track._id);
-		if (index == -1 || index == undefined) {
-			throw ApiError.badRequset("Не удалось найти трек");
-		} else {
-			user?.favoritesTrack.splice(index, 1);
-			await user?.save();
-			return user;
-		}
 	}
 
 	public async addPlaylist(playlistId: string, userId: string) {
@@ -124,9 +94,9 @@ export class UserService implements IUserService {
 	public async deletePlaylist(playlistId: string, userId: string) {
 		const playlist: any = await PlayList.findById(playlistId);
 		const user = await User.findById(userId);
-		const index = user?.playLists.findIndex((item) => item._id == playlist._id);
+		const index = user?.playLists.findIndex((item) => item._id.toString() == playlist._id.toString());
 		if (index == -1 || index == undefined) {
-			ApiError.badRequset("Не удалось найти плейлист");
+			throw ApiError.badRequset("Не удалось найти плейлист");
 		} else {
 			user?.playLists.splice(index, 1);
 			await user?.save();
