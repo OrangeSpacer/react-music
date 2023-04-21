@@ -24,6 +24,12 @@ export class TrackService implements ITrack {
 		return track;
 	}
 
+	public async getLocalTrack(creatorId: string) {
+		const tracks = await Track.find();
+		const localTracks = tracks.filter((track) => track.creator == creatorId);
+		return localTracks;
+	}
+
 	public async add(
 		title: string,
 		author: string,

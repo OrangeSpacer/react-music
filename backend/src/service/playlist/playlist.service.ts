@@ -20,6 +20,13 @@ export class PlaylistService implements IPlaylisrService {
 		const playlist = await PlayList.findById(playlistId);
 		return playlist;
 	}
+
+	public async getLocalPlaylist(authorId: string) {
+		const playlists = await PlayList.find();
+		const localPlaylist = playlists.filter((playlist) => playlist.author == authorId);
+		return localPlaylist;
+	}
+
 	public async createPlaylist(title: string, author: string): Promise<object> {
 		const candidatePlaylist = await PlayList.findOne({ title });
 		this.check(candidatePlaylist, "Плейлист с таким названием уже существует");

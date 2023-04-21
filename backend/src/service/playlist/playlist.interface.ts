@@ -4,5 +4,6 @@ export interface IPlaylisrService {
 	createPlaylist: (title: string, author: string, authorPlaylist: string) => void;
 	deletePlayList: (id: string, authorPlaylist: string) => void;
 	deleteTrack: (idPlayList: string, idTrack: string, authorPlaylist: string) => void;
+	getLocalPlaylist: (authorId: string) => void;
 	addTrack: (idPlayList: string, idTrack: string, authorPlaylist: string) => void;
 }
