@@ -5,7 +5,7 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { PlaylistService } from "../../service/playlist/playlist.service";
 import { IUserService } from "../../service/user/user.interface";
-
+// Добавить сервис и контроллер для получения плейлистов пользователя
 @injectable()
 export class PlaylistController extends Routes implements IPlaylistController {
 	constructor(
@@ -23,6 +23,11 @@ export class PlaylistController extends Routes implements IPlaylistController {
 				path: "/get",
 				method: "post",
 				func: this.getForId,
+			},
+			{
+				path: "/your",
+				method: "get",
+				func: this.getLocalPlaylist,
 			},
 			{
 				path: "/create",
@@ -58,6 +63,18 @@ export class PlaylistController extends Routes implements IPlaylistController {
 			next(e);
 		}
 	}
+
+	public async getLocalPlaylist(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { refreshToken } = req.cookies;
+			const { id }: any = await this.userService.getInfo(refreshToken);
+			const playlists = await this.playlistService.getLocalPlaylist(id);
+			res.json(playlists);
+		} catch (e) {
+			next(e);
+		}
+	}
+
 	public async createPlayList(req: Request, res: Response, next: NextFunction) {
 		try {
 			const { refreshToken } = req.cookies;

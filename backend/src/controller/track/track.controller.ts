@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { ITrackController } from "./track.interface";
 import { Routes } from "../../route/routes";
-import { inject, injectable } from "inversify";
+import { id, inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { TrackService } from "../../service/track/track.service";
 import { RoleAdminMiddleware } from "../../middleware/roleAdmin.middleware";
 import { AllRoleMiddleware } from "../../middleware/allRole.middleware";
 import { IUserService } from "../../service/user/user.interface";
+// Добавить сервис и контроллер для получения треков пользователя
 @injectable()
 export class TrackController extends Routes implements ITrackController {
 	constructor(
@@ -23,18 +24,26 @@ export class TrackController extends Routes implements ITrackController {
 			{
 				path: "/add",
 				method: "post",
+				middleware: [new AllRoleMiddleware()],
 				func: this.add,
 			},
 			{
 				path: "/delete",
 				method: "delete",
-				// middleware: [new AllRoleMiddleware()],
+				middleware: [new AllRoleMiddleware()],
 				func: this.delete,
 			},
 			{
 				path: "/get",
 				method: "post",
+				middleware: [new AllRoleMiddleware()],
 				func: this.getForId,
+			},
+			{
+				path: "/your",
+				method: "get",
+				middleware: [new AllRoleMiddleware()],
+				func: this.getLocalTrack,
 			},
 		]);
 	}
@@ -54,7 +63,9 @@ export class TrackController extends Routes implements ITrackController {
 
 	public async add(req: Request, res: Response, next: NextFunction): Promise<object | void> {
 		try {
-			const { title, author, creator } = req.body;
+			const { refreshToken } = req.cookies;
+			const { id: creator }: any = await this.userService.getInfo(refreshToken);
+			const { title, author } = req.body;
 			const files: any = req.files;
 			const { track, image } = files.reduce((acc: any, item: any) => {
 				acc[item.fieldname] = item;
@@ -87,6 +98,17 @@ export class TrackController extends Routes implements ITrackController {
 			const { id }: any = req.query;
 			const track = await this.trackService.getForId(id);
 			res.json(track);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	public async getLocalTrack(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { refreshToken } = req.cookies;
+			const { id }: any = await this.userService.getInfo(refreshToken);
+			const tracks = await this.trackService.getLocalTrack(id);
+			res.json(tracks);
 		} catch (e) {
 			next(e);
 		}
