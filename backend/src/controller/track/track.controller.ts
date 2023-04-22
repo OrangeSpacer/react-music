@@ -4,10 +4,8 @@ import { Routes } from "../../route/routes";
 import { id, inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { TrackService } from "../../service/track/track.service";
-import { RoleAdminMiddleware } from "../../middleware/roleAdmin.middleware";
 import { AllRoleMiddleware } from "../../middleware/allRole.middleware";
 import { IUserService } from "../../service/user/user.interface";
-// Добавить сервис и контроллер для получения треков пользователя
 @injectable()
 export class TrackController extends Routes implements ITrackController {
 	constructor(
@@ -103,7 +101,7 @@ export class TrackController extends Routes implements ITrackController {
 		}
 	}
 
-	public async getLocalTrack(req: Request, res: Response, next: NextFunction) {
+	public async getLocalTrack(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { refreshToken } = req.cookies;
 			const { id }: any = await this.userService.getInfo(refreshToken);

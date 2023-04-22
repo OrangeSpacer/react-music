@@ -32,7 +32,7 @@ export class FavoritesController extends Routes implements IFavoritesController 
 		]);
 	}
 
-	public async addFavoritesTracK(req: Request, res: Response, next: NextFunction) {
+	public async addFavoritesTracK(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { refreshToken } = req.cookies;
 			const { trackId } = req.body;
@@ -44,7 +44,7 @@ export class FavoritesController extends Routes implements IFavoritesController 
 		}
 	}
 
-	public async deleteFavoritesTrack(req: Request, res: Response, next: NextFunction) {
+	public async deleteFavoritesTrack(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { refreshToken } = req.cookies;
 			const { trackId } = req.body;
@@ -56,7 +56,7 @@ export class FavoritesController extends Routes implements IFavoritesController 
 		}
 	}
 
-	public async getFavoritesTracKs(req: Request, res: Response, next: NextFunction) {
+	public async getFavoritesTracKs(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { refreshToken } = req.cookies;
 			const { id }: any = await this.userService.getInfo(refreshToken);

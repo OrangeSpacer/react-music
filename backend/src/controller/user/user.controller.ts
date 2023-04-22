@@ -6,7 +6,6 @@ import { TYPES } from "../../types";
 import { Routes } from "../../route/routes";
 import { validationResult } from "express-validator";
 import { ApiError } from "../../exceptions/api.error";
-import { RoleAdminMiddleware } from "../../middleware/roleAdmin.middleware";
 
 @injectable()
 export class UserController extends Routes implements IUserController {
@@ -48,16 +47,10 @@ export class UserController extends Routes implements IUserController {
 				method: "delete",
 				func: this.deletePlaylist,
 			},
-			{
-				path: "/createRole",
-				method: "get",
-				middleware: [new RoleAdminMiddleware()],
-				func: this.createRole,
-			},
 		]);
 	}
 
-	public async getInfo(req: Request, res: Response, next: NextFunction) {
+	public async getInfo(req: Request, res: Response, next: NextFunction): Promise<void> {
 		const { refreshToken } = req.cookies;
 		const user = await this.userService.getInfo(refreshToken);
 		res.json(user);
@@ -125,8 +118,9 @@ export class UserController extends Routes implements IUserController {
 				return next(ApiError.badRequset("ошибка при валидации", error.array()));
 			}
 			const { refreshToken } = req.cookies;
+			console.log(refreshToken);
 			const userData: any = await this.userService.refresh(refreshToken);
-			res.cookie("refreshToken", userData.token.refreshToken, {
+			res.cookie("refreshToken", userData.tokens.refreshToken, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
 			});
@@ -136,7 +130,7 @@ export class UserController extends Routes implements IUserController {
 		}
 	}
 
-	public async addPlaylist(req: Request, res: Response, next: NextFunction) {
+	public async addPlaylist(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { refreshToken } = req.cookies;
 			const { playlistId } = req.body;
@@ -148,25 +142,13 @@ export class UserController extends Routes implements IUserController {
 		}
 	}
 
-	public async deletePlaylist(req: Request, res: Response, next: NextFunction) {
+	public async deletePlaylist(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { refreshToken } = req.cookies;
 			const { playlistId }: any = req.query;
 			const { id }: any = await this.userService.getInfo(refreshToken);
 			const playlist = await this.userService.deletePlaylist(playlistId, id);
 			res.json(playlist);
-		} catch (e) {
-			next(e);
-		}
-	}
-
-	public async createRole(req: Request, res: Response, next: NextFunction): Promise<void> {
-		try {
-			// const user = new Role();
-			// const admin = new Role({ type: "ADMIN" });
-			// await user.save();
-			// await admin.save();
-			res.json({ message: "роль создана" });
 		} catch (e) {
 			next(e);
 		}

@@ -5,7 +5,6 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { PlaylistService } from "../../service/playlist/playlist.service";
 import { IUserService } from "../../service/user/user.interface";
-// Добавить сервис и контроллер для получения плейлистов пользователя
 @injectable()
 export class PlaylistController extends Routes implements IPlaylistController {
 	constructor(
@@ -46,7 +45,7 @@ export class PlaylistController extends Routes implements IPlaylistController {
 			},
 		]);
 	}
-	public async getAll(req: Request, res: Response, next: NextFunction) {
+	public async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const playlists = await this.playlistService.getAll();
 			res.json(playlists);
@@ -54,7 +53,7 @@ export class PlaylistController extends Routes implements IPlaylistController {
 			next(e);
 		}
 	}
-	public async getForId(req: Request, res: Response, next: NextFunction) {
+	public async getForId(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { id }: any = req.query;
 			const playlist = await this.playlistService.getForId(id);
@@ -64,7 +63,7 @@ export class PlaylistController extends Routes implements IPlaylistController {
 		}
 	}
 
-	public async getLocalPlaylist(req: Request, res: Response, next: NextFunction) {
+	public async getLocalPlaylist(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { refreshToken } = req.cookies;
 			const { id }: any = await this.userService.getInfo(refreshToken);
@@ -75,7 +74,7 @@ export class PlaylistController extends Routes implements IPlaylistController {
 		}
 	}
 
-	public async createPlayList(req: Request, res: Response, next: NextFunction) {
+	public async createPlayList(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { refreshToken } = req.cookies;
 			const { title } = req.body;
@@ -86,7 +85,7 @@ export class PlaylistController extends Routes implements IPlaylistController {
 			next(e);
 		}
 	}
-	public async addTrack(req: Request, res: Response, next: NextFunction) {
+	public async addTrack(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { refreshToken } = req.cookies;
 			const { idPlaylist, idTrack } = req.body;
@@ -98,7 +97,7 @@ export class PlaylistController extends Routes implements IPlaylistController {
 		}
 	}
 
-	public async deletePlayList(req: Request, res: Response, next: NextFunction) {
+	public async deletePlayList(req: Request, res: Response, next: NextFunction): Promise<void> {
 		try {
 			const { refreshToken } = req.cookies;
 			const { id } = req.query;
@@ -110,7 +109,7 @@ export class PlaylistController extends Routes implements IPlaylistController {
 		}
 	}
 
-	public async deleteTrack(req: Request, res: Response, next: NextFunction) {
+	public async deleteTrack(req: Request, res: Response, next: NextFunction): Promise<void> {
 		const { refreshToken } = req.cookies;
 		const { idplaylist, idTrack } = req.query;
 		const { email }: any = await this.userService.getInfo(refreshToken);
