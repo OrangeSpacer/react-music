@@ -4,6 +4,10 @@ import { IUserRepositroy } from "./user.interface";
 import { injectable } from "inversify";
 @injectable()
 export class UserRepositry implements IUserRepositroy {
+	public async create(object: any): Promise<any> {
+		const user = await User.create(object);
+		return user;
+	}
 	public async findById(id: string): Promise<any> {
 		const user = await User.findById(id);
 		return user;
