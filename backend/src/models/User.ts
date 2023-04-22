@@ -5,7 +5,6 @@ const UserScheme = new Schema({
 	password: { type: String, required: true },
 	favoritesTrack: { type: Array, default: [] },
 	playLists: { type: Array, default: [] },
-	roles: [{ type: String, ref: "Role" }],
 });
 
 export const User = model("User", UserScheme);

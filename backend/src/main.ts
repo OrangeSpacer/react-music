@@ -19,6 +19,7 @@ import { PlaylistService } from "./service/playlist/playlist.service";
 import { PlaylistController } from "./controller/playlist/playlist.controller";
 import { FavoritesController } from "./controller/favorites/favorites.controller";
 import { FavoritesService } from "./service/favorites/favorites.service";
+import { Repository } from "./repository/repository";
 
 export interface IBootStrapReturn {
 	appContainer: Container;
@@ -28,6 +29,7 @@ export interface IBootStrapReturn {
 const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ILogger>(TYPES.Logger).to(LoggerService).inSingletonScope();
 	bind<DatabaseService>(TYPES.Database).to(DatabaseService).inSingletonScope();
+	bind<Repository>(TYPES.Repository).to(Repository).inSingletonScope();
 	bind<ITokenService>(TYPES.TokenService).to(TokenService).inSingletonScope();
 	bind<IUserService>(TYPES.UserService).to(UserService).inSingletonScope();
 	bind<UserController>(TYPES.UserController).to(UserController).inSingletonScope();

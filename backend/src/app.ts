@@ -46,7 +46,7 @@ export class App {
 
 	private useRoutes(): void {
 		this.app.use("/user", this.userCOntroller.router);
-		this.app.use("/track", new AllRoleMiddleware().exception, this.trackController.router);
+		this.app.use("/track", this.trackController.router);
 		this.app.use("/favorites", new AllRoleMiddleware().exception, this.favoritesController.router);
 		this.app.use("/playlist", new AllRoleMiddleware().exception, this.playListController.router);
 	}
