@@ -1,10 +1,13 @@
 import Jwt from "jsonwebtoken";
 import { Token } from "../../models/Token";
 import { ITokenService } from "./token.interface";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
+import { Repository } from "../../repository/repository";
+import { TYPES } from "../../types";
 
 @injectable()
 export class TokenService implements ITokenService {
+	constructor(@inject(TYPES.Repository) private repository: Repository) {}
 	public generateToken(payload: string | object): Object {
 		const accessToken = Jwt.sign(payload, process.env.SECRET_ACCESS as string, {
 			expiresIn: "30m",
@@ -20,22 +23,25 @@ export class TokenService implements ITokenService {
 	}
 
 	public async saveToken(userId: string, tokens: { refreshToken: string }): Promise<object> {
-		const tokenData = await Token.findOne({ user: userId });
+		const tokenData = await this.repository.token.findOne({ user: userId });
 		if (tokenData) {
 			tokenData.refreshToken = tokens.refreshToken;
 			return tokenData.save();
 		}
-		const token = await Token.create({ refreshToken: tokens.refreshToken, user: userId });
+		const token = await this.repository.token.create({
+			refreshToken: tokens.refreshToken,
+			user: userId,
+		});
 		return token;
 	}
 
 	public async removeToken(refreshToken: string): Promise<object> {
-		const tokenData = await Token.deleteOne({ refreshToken });
+		const tokenData = await this.repository.token.deleteOne({ refreshToken });
 		return tokenData;
 	}
 
 	public async findToken(refreshToken: string): Promise<object | null> {
-		const tokenData = await Token.findOne({ refreshToken });
+		const tokenData = await this.repository.token.findOne({ refreshToken });
 		return tokenData;
 	}
 

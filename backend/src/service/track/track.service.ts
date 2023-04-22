@@ -5,27 +5,31 @@ import { ITrack } from "./track.interface";
 import { FileService } from "../file/file.service";
 import { TYPES } from "../../types";
 import { TYPE_FILE } from "../file/file.interface";
+import { Repository } from "../../repository/repository";
 
 @injectable()
 export class TrackService implements ITrack {
-	constructor(@inject(TYPES.FileService) private fileService: FileService) {}
+	constructor(
+		@inject(TYPES.FileService) private fileService: FileService,
+		@inject(TYPES.Repository) private repository: Repository,
+	) {}
 	private errorChecker(item: any, message: string): void {
 		if (item) {
 			throw ApiError.badRequset(message);
 		}
 	}
 	public async getAll(): Promise<object> {
-		const tracks = await Track.find();
+		const tracks = await this.repository.track.find();
 		return tracks;
 	}
 
 	public async getForId(id: string): Promise<Object | null> {
-		const track = await Track.findById(id);
+		const track = await this.repository.track.findById(id);
 		return track;
 	}
 
 	public async getLocalTrack(creatorId: string) {
-		const tracks = await Track.find();
+		const tracks = await this.repository.track.find();
 		const localTracks = tracks.filter((track) => track.creator == creatorId);
 		return localTracks;
 	}
@@ -41,13 +45,19 @@ export class TrackService implements ITrack {
 		this.errorChecker(candidateTrack, "Трек с таким названием уже существует");
 		const trackPath = this.fileService.createFile(track, TYPE_FILE.AUDIO);
 		const imagePath = this.fileService.createFile(image, TYPE_FILE.IMAGE);
-		const trackData = await Track.create({ title, author, creator, imagePath, trackPath });
+		const trackData = await this.repository.track.create({
+			title,
+			author,
+			creator,
+			imagePath,
+			trackPath,
+		});
 		console.log(trackData);
 		return trackData;
 	}
 
 	public async delete(id: string, author: string): Promise<string> {
-		const deleteCandidateTrack = await Track.findById(id);
+		const deleteCandidateTrack = await this.repository.track.findById(id);
 		console.log(author);
 		if (deleteCandidateTrack?.creator != author) {
 			throw ApiError.badRequset("У вас нет прав для выполнения данного действия");
@@ -57,7 +67,7 @@ export class TrackService implements ITrack {
 		}
 		this.fileService.deleteFIle(deleteCandidateTrack?.imagePath as string);
 		this.fileService.deleteFIle(deleteCandidateTrack?.trackPath as string);
-		await Track.deleteOne({ _id: id });
+		await this.repository.track.deleteOne({ _id: id });
 		return "трек успешно удален";
 	}
 }
