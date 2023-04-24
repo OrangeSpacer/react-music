@@ -99,7 +99,7 @@ export class UserService implements IUserService {
 			throw ApiError.badRequset("Не удалось найти плейлист");
 		} else {
 			user?.playLists.splice(index, 1);
-			await this.repository.user?.updateOne(user);
+			await this.repository.user.updateOne(user);
 			return user;
 		}
 	}

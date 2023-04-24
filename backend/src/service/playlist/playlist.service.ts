@@ -38,7 +38,6 @@ export class PlaylistService implements IPlaylisrService {
 	}
 	public async deletePlayList(id: string, authorPlaylist: string): Promise<string> {
 		const candidateDeletePlaylist: any = await this.repository.playlist.findOne({ _id: id });
-		console.log(candidateDeletePlaylist);
 		if (candidateDeletePlaylist.author != authorPlaylist) {
 			throw ApiError.badRequset("У вас нет прав для выполнения данного действия");
 		}

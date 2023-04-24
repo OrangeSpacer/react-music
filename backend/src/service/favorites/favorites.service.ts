@@ -12,12 +12,12 @@ export class FavoritesService implements IFavoritesService {
 		@inject(TYPES.TrackService) private trackService: ITrack,
 		@inject(TYPES.Repository) private repository: Repository,
 	) {}
-	public async getFavoritesTracKs(userId: string) {
+	public async getFavoritesTracKs(userId: string): Promise<Object | null> {
 		const userTracks: any = await this.repository.user.findById(userId);
 		return userTracks?.favoritesTrack;
 	}
 
-	public async addFavoritesTracK(trackId: string, userId: string) {
+	public async addFavoritesTracK(trackId: string, userId: string): Promise<Object | null> {
 		const { _id }: any = await this.trackService.getForId(trackId);
 		const user = await this.repository.user.findById(userId);
 		if (user?.favoritesTrack.indexOf(_id) != -1) {
@@ -28,7 +28,7 @@ export class FavoritesService implements IFavoritesService {
 		return user;
 	}
 
-	public async deleteFavoritesTrack(trackId: string, userId: string) {
+	public async deleteFavoritesTrack(trackId: string, userId: string): Promise<Object | null> {
 		const track: any = await this.trackService.getForId(trackId);
 		const user = await this.repository.user.findById(userId);
 		const index = user?.favoritesTrack.findIndex((item) => item.toString() == track._id);

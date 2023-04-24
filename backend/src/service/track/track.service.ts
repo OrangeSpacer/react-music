@@ -28,7 +28,7 @@ export class TrackService implements ITrack {
 		return track;
 	}
 
-	public async getLocalTrack(creatorId: string) {
+	public async getLocalTrack(creatorId: string): Promise<Object | null> {
 		const tracks = await this.repository.track.find();
 		const localTracks = tracks.filter((track) => track.creator == creatorId);
 		return localTracks;
@@ -52,13 +52,11 @@ export class TrackService implements ITrack {
 			imagePath,
 			trackPath,
 		});
-		console.log(trackData);
 		return trackData;
 	}
 
 	public async delete(id: string, author: string): Promise<string> {
 		const deleteCandidateTrack = await this.repository.track.findById(id);
-		console.log(author);
 		if (deleteCandidateTrack?.creator != author) {
 			throw ApiError.badRequset("У вас нет прав для выполнения данного действия");
 		}
