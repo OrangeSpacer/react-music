@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 
 export interface IBurger extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    listLink: {text:string, link:string}[]
+    listLink: {text:string, link:string, imgLink: string}[]
 }
