@@ -1,0 +1,46 @@
+@import "../../styles/variable";
+
+.music {
+    display: grid;
+    align-items: center;
+    border: 1px solid $semi-black;
+    border-radius: 5px;
+    padding: 5px 15px;
+    grid-template-columns: 40px 40px 1fr auto;
+    &:hover{
+        background: $dark-black;
+    }
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+}
+
+.title{
+    color: $white;
+    font-size: 20px;
+}
+
+.author{
+    color: $semi-black;
+    font-size: 18px;
+}
+
+.function {
+    background: none;
+    border: none;
+    border-radius: 100%;
+    transition: all 0.5s ease;
+    img {
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        filter: brightness(0) invert(1);
+    }
+    &:hover {
+        background: $semi-black;
+        transition: all 0.5s ease;
+    }
+}
