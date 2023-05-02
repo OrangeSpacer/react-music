@@ -1,8 +1,14 @@
+@import "../../styles/variable";
+
 .mainBlock{
     display: grid;
-    grid-template-columns: 0.5fr 1fr;
-    grid-template-rows: 95% 5%;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 1fr auto;
     height: 100vh;
+}
+
+.burger{
+    background-color: $dark-black;
 }
 
 .player {
