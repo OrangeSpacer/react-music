@@ -10,7 +10,7 @@ const Music = ({musicData}:IMusic) => {
             play
         </Button>
         <div className={styles.logo}>
-            <img src={musicData.imagePath} alt="musicImg" />
+            <img src={"http://127.0.0.1:5000/" + musicData.imagePath} alt="musicImg" />
         </div>
         <div className={styles.info}>
             <div className={styles.title}>

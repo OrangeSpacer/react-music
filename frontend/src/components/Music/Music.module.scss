@@ -6,9 +6,17 @@
     border: 1px solid $semi-black;
     border-radius: 5px;
     padding: 5px 15px;
-    grid-template-columns: 40px 40px 1fr auto;
+    grid-template-columns: 40px 55px 1fr auto;
     &:hover{
         background: $dark-black;
+    }
+}
+
+.logo{
+    text-align: center;
+    img {
+        width: 45px;
+        height: 45px;
     }
 }
 
