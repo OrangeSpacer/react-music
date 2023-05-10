@@ -1,10 +1,25 @@
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Navigate, RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './store/store.ts'
 import Musics from './pages/Musics/Musics.tsx'
 import './styles/index.scss'
 import App from './App.tsx'
+import Login from './pages/Login/Login.tsx'
+
+interface IPrivateRote {
+  element: React.FunctionComponent,
+}
+
+const PrivateRoute: React.FC<IPrivateRote> = ({element: Element}) => {
+  const isAuthenticated = localStorage.getItem("token") !== null;
+
+  if(!isAuthenticated) {
+    return <Navigate to="/login" replace/>
+  }
+
+  return <Element/>
+}
 
 const router = createBrowserRouter([
   {
@@ -16,8 +31,16 @@ const router = createBrowserRouter([
         element: <Musics/>
       },
       {
-        path:"/test",
-        element: <div>hello world2</div>
+        path:"/music",
+        element: <Musics/>
+      },
+      {
+        path: "/login",
+        element: <Login/>
+      },
+      {
+        path:"/profile",
+        element: <PrivateRoute element={<div>Profile</div>}/>
       }
     ]
   }
