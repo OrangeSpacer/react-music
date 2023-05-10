@@ -13,7 +13,7 @@ const Musics = () => {
     }
   
     if(error){
-      return error
+      return <div>Что-то пошло не так</div>
     }
   return (
     <div>
