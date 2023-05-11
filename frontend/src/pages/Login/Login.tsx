@@ -5,14 +5,24 @@ import cn from "classnames"
 import styles from "./Login.module.scss"
 import Button from '../../components/UI/Button/Button'
 import { useLoginUserMutation } from '../../store/api/user.api'
+import Error from '../../components/Error/Error'
+import { useEffect, useState } from 'react'
 
 type FormValues = {
     email: string
     password: string
 }
 
+interface ErrorType {
+    status: number,
+    data: {
+        message: string
+    }
+}
+
 const Login = () => {
     const [loginUser,response] = useLoginUserMutation()
+    const [errorMessage,setErrorMessage] = useState<string>()
     const {register, handleSubmit, formState: {errors}} = useForm<FormValues>();
     const onSubmit = handleSubmit((data) => {
         loginUser(data)
@@ -20,12 +30,19 @@ const Login = () => {
     if(response.isSuccess){
         console.log(response.data)
     }
-    if(response.isError){
-        console.log(response.error)
-    }
+    useEffect(() => {
+        if(response.isError){
+            const error  = response.error as ErrorType
+            setErrorMessage(error.data.message)
+        }
+    },[response.error,response.isError])
+
     return (
     <div className={styles.authorization}>
         <Title text='Авторизация/Регистрация' />
+        <div className={styles.errorBlock}>
+            {response.isError && errorMessage ? <Error message={errorMessage}/>:null}
+        </div>
         <form onSubmit={onSubmit} className={styles.form}>
             <label className={styles.label}>
                 <div className={styles.descr}>Email</div>

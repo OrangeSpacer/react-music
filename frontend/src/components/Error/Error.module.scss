@@ -1,0 +1,9 @@
+@import "../../styles/variable";
+
+.error{
+    font-size: 18px;
+    padding: 10px;
+    color: $white;
+    background: $error;
+    border-radius: 5px;
+}
