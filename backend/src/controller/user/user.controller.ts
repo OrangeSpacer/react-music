@@ -67,7 +67,11 @@ export class UserController extends Routes implements IUserController {
 				return next(ApiError.badRequset("ошибка при валидации", error.array()));
 			}
 			const { email, password }: any = req.body;
-			const userData = await this.userService.registration(password, email);
+			const userData: any = await this.userService.registration(password, email);
+			res.cookie("refreshToken", userData?.token?.refreshToken, {
+				maxAge: 30 * 24 * 60 * 60 * 1000,
+				httpOnly: true,
+			});
 			return res.json(userData);
 		} catch (e) {
 			next(e);
@@ -118,8 +122,8 @@ export class UserController extends Routes implements IUserController {
 				return next(ApiError.badRequset("ошибка при валидации", error.array()));
 			}
 			const { refreshToken } = req.cookies;
-			console.log(refreshToken);
 			const userData: any = await this.userService.refresh(refreshToken);
+			console.log(userData);
 			res.cookie("refreshToken", userData.tokens.refreshToken, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,

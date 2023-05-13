@@ -37,7 +37,12 @@ export class App {
 
 	private useConfig(): void {
 		this.app.use(express.json());
-		this.app.use(cors());
+		this.app.use(
+			cors({
+				credentials: true,
+				origin: "http://127.0.0.1:5173",
+			}),
+		);
 		this.app.use(cookieParser());
 		this.app.use(multer().any());
 		this.app.use(express.static(__dirname + "/static"));
