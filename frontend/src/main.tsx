@@ -8,8 +8,9 @@ import App from './App.tsx'
 import Login from './pages/Login/Login.tsx'
 
 interface IPrivateRote {
-  element: React.FunctionComponent,
+  element: any,
 }
+
 
 const PrivateRoute: React.FC<IPrivateRote> = ({element: Element}) => {
   const isAuthenticated = localStorage.getItem("token") !== null;
@@ -18,7 +19,7 @@ const PrivateRoute: React.FC<IPrivateRote> = ({element: Element}) => {
     return <Navigate to="/login" replace/>
   }
 
-  return <Element/>
+  return Element
 }
 
 const router = createBrowserRouter([
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/music",
-        element: <Musics/>
+        element: <PrivateRoute element={<Musics/>}/>
       },
       {
         path: "/login",

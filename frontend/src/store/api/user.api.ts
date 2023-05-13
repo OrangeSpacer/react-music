@@ -11,10 +11,42 @@ export const userApi = createApi({
                 body: payload,
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8'
-                }
+                },
+                credentials: "include"
+            })
+        }),
+        registerUser: builder.mutation({
+            query: (payload) => ({
+                url: "/registration",
+                method: "POST",
+                body: payload,
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                },
+                credentials: "include"
+            })
+        }),
+        refreshUser: builder.mutation({
+            query: () => ({
+                url: "/refresh",
+                method: "GET",
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                },
+                credentials: "include"
+            })
+        }),
+        logouthUser: builder.mutation({
+            query: () => ({
+                url: "/logout",
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                },
+                credentials: "include"
             })
         })
     })
 })
 
-export const {useLoginUserMutation} = userApi
+export const {useLoginUserMutation,useRegisterUserMutation,useRefreshUserMutation, useLogouthUserMutation} = userApi

@@ -3,13 +3,19 @@ import { Link, useNavigate } from "react-router-dom"
 import Button from "../UI/Button/Button"
 
 import styles from "./Burger.module.scss"
-import { useEffect } from "react"
+import { useLogouthUserMutation } from "../../store/api/user.api"
 
 const Burger = ({listLink}:IBurger): JSX.Element => {
+    const [logout,logoutResponse] = useLogouthUserMutation()
     const navigate = useNavigate()
 
     const profileHandler = () => {
         navigate("/profile")
+    }
+
+    const onLogout = () => {
+        logout("")
+        navigate("/login")
     }
 
     return (
@@ -31,7 +37,7 @@ const Burger = ({listLink}:IBurger): JSX.Element => {
             <div className={styles.logoutImgBlock}>
                 <img src="img/burger/logout.svg" alt="logoutImg" className={styles.logoutImg} />
             </div>
-            <div className={styles.logoutText}>
+            <div className={styles.logoutText} onClick={onLogout}>
                 Log out
             </div>
         </div>
