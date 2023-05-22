@@ -1,6 +1,6 @@
 import Title from '../../components/UI/Title/Title'
 import { useForm } from 'react-hook-form'
-import { useLoginUserMutation, useRegisterUserMutation } from '../../store/api/user.api'
+import { useLoginUserMutation, useRegisterUserMutation } from '../../store/api/user/user.api'
 import Error from '../../components/Error/Error'
 import { useEffect, useState } from 'react'
 import { useAppDispatch } from '../../hooks/redux'
@@ -8,7 +8,8 @@ import { useAppDispatch } from '../../hooks/redux'
 import cn from "classnames"
 import styles from "./Login.module.scss"
 import Button from '../../components/UI/Button/Button'
-import { login } from '../../store/features/authSlice'
+import { login } from '../../store/features/auth/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 type FormValues = {
     email: string
@@ -28,6 +29,7 @@ const Login = () => {
     const [errorMessage,setErrorMessage] = useState<string>()
     const {register, handleSubmit, formState: {errors},getValues} = useForm<FormValues>();
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
 
     const onLogin = handleSubmit(() => {
@@ -44,11 +46,13 @@ const Login = () => {
     useEffect(() => {
         if(loginResponse.isSuccess){
             dispatch(login(loginResponse.data))
+            navigate("/profile")
         }
         if(registerResponse.isSuccess){
             dispatch(login(registerResponse.data))
+            navigate("/profile")
         }
-    },[loginResponse.isSuccess,loginResponse.data,dispatch,registerResponse.isSuccess,registerResponse.data])
+    },[loginResponse.isSuccess,loginResponse.data,dispatch,registerResponse.isSuccess,registerResponse.data,navigate])
 
     
     useEffect(() => {
