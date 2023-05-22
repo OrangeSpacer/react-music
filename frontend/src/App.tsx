@@ -1,17 +1,24 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Main from "./pages/Main/Main"
-import { useRefreshUserMutation } from "./store/api/user.api"
+import { useRefreshUserMutation } from "./store/api/user/user.api"
 import { useNavigate } from "react-router-dom"
 
 const App = () => {
-  const [auth,res] = useRefreshUserMutation()
+  const [refreshToken,res] = useRefreshUserMutation()
   const navigate = useNavigate()
 
   useEffect(() => {
     if(localStorage.getItem("token")){
-      auth("")
+      refreshToken("")
     }
   },[])
+
+  useEffect(() => {
+    if(res.isSuccess) {
+      navigate("/")
+    }
+  },[res.isSuccess,navigate])
+
 
   useEffect(() => {
     if(res.isError){

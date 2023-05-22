@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom"
 import Button from "../UI/Button/Button"
 
 import styles from "./Burger.module.scss"
-import { useLogouthUserMutation } from "../../store/api/user.api"
+import { useLogouthUserMutation } from "../../store/api/user/user.api"
 
 const Burger = ({listLink}:IBurger): JSX.Element => {
-    const [logout,logoutResponse] = useLogouthUserMutation()
+    const [logout] = useLogouthUserMutation()
     const navigate = useNavigate()
 
     const profileHandler = () => {

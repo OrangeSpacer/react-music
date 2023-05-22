@@ -6,6 +6,7 @@ import Musics from './pages/Musics/Musics.tsx'
 import './styles/index.scss'
 import App from './App.tsx'
 import Login from './pages/Login/Login.tsx'
+import Profile from './pages/Profile/Profile.tsx'
 
 interface IPrivateRote {
   element: any,
@@ -14,7 +15,6 @@ interface IPrivateRote {
 
 const PrivateRoute: React.FC<IPrivateRote> = ({element: Element}) => {
   const isAuthenticated = localStorage.getItem("token") !== null;
-
   if(!isAuthenticated) {
     return <Navigate to="/login" replace/>
   }
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/music",
-        element: <PrivateRoute element={<Musics/>}/>
+        element: <Musics/>
       },
       {
         path: "/login",
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/profile",
-        element: <PrivateRoute element={<div>Profile</div>}/>
+        element: <PrivateRoute element={<Profile/>}/>
       }
     ]
   }

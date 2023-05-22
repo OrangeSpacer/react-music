@@ -1,7 +1,7 @@
 import Music from "../../components/Music/Music"
 import Button from "../../components/UI/Button/Button"
 import Title from "../../components/UI/Title/Title"
-import { useGetMusicAllQuery } from "../../store/api/music.api"
+import { useGetMusicAllQuery } from "../../store/api/music/music.api"
 
 import styles from "./Music.module.scss"
 
