@@ -67,9 +67,9 @@ export class UserService implements IUserService {
 		}
 		const user: any = await this.repository.user.findById(userData.id);
 		const userDto = new UserDto(user);
-		const tokens: any = this.tokenService.generateToken({ ...userDto });
-		await this.tokenService.saveToken(userDto.id, tokens);
-		return { tokens, userDto };
+		const token: any = this.tokenService.generateToken({ ...userDto });
+		await this.tokenService.saveToken(userDto.id, token);
+		return { token, userDto };
 	}
 
 	public async getInfo(refreshToken: string): Promise<object> {
