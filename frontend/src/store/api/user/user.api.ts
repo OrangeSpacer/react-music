@@ -1,12 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { apiSlice } from "../apiSlice";
 
-export const userApi = createApi({
-    reducerPath: "loginApi",
-    baseQuery: fetchBaseQuery({baseUrl: "http://127.0.0.1:5000/user"}),
+export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         loginUser: builder.mutation({
             query: (payload) => ({
-                url: "/login",
+                url: "/user/login",
                 method: "POST",
                 body: payload,
                 headers: {
@@ -17,7 +15,7 @@ export const userApi = createApi({
         }),
         registerUser: builder.mutation({
             query: (payload) => ({
-                url: "/registration",
+                url: "/user/registration",
                 method: "POST",
                 body: payload,
                 headers: {
@@ -28,7 +26,7 @@ export const userApi = createApi({
         }),
         refreshUser: builder.mutation({
             query: () => ({
-                url: "/refresh",
+                url: "/user/refresh",
                 method: "GET",
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8'
@@ -38,15 +36,18 @@ export const userApi = createApi({
         }),
         logouthUser: builder.mutation({
             query: () => ({
-                url: "/logout",
+                url: "/user/logout",
                 method: "POST",
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8'
                 },
                 credentials: "include"
             })
-        })
+        }),
+        getInfo: builder.query<any, string>({
+            query: () => "/user/info"
+        }) 
     })
 })
 
-export const {useLoginUserMutation,useRegisterUserMutation,useRefreshUserMutation, useLogouthUserMutation} = userApi
+export const {useLoginUserMutation, useRegisterUserMutation, useLogouthUserMutation, useRefreshUserMutation, useGetInfoQuery} = userApiSlice

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ILogin } from "../../types/login.interface";
+import { ILogin } from "../../../types/login.interface";
 
 interface authState {
     data: ILogin | null
