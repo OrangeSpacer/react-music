@@ -11,8 +11,15 @@ export const musicApi = apiSlice.injectEndpoints({
                 url: "/track/your",
                 method: "GET",
             })
-        })
+        }),
+        createTrack: builder.mutation({
+            query: (payload) => ({
+                url: "/track/add",
+                method: "POST",
+                body: payload,
+            })
+        }),
     })
 })
 
-export const {useGetMusicAllQuery, useGetYourMusicMutation} = musicApi
+export const {useGetMusicAllQuery, useGetYourMusicMutation, useCreateTrackMutation} = musicApi

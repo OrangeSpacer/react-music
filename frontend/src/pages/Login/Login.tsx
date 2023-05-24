@@ -1,7 +1,7 @@
 import Title from '../../components/UI/Title/Title'
 import { useForm } from 'react-hook-form'
 import { useLoginUserMutation, useRegisterUserMutation } from '../../store/api/user/user.api'
-import Error from '../../components/Error/Error'
+import Notification from '../../components/Notification/Notification'
 import { useEffect, useState } from 'react'
 import { useAppDispatch } from '../../hooks/redux'
 
@@ -73,7 +73,7 @@ const Login = () => {
     <div className={styles.authorization}>
         <Title text='Авторизация/Регистрация' />
         <div className={styles.errorBlock}>
-            {(loginResponse.isError || registerResponse.isError) && errorMessage ? <Error message={errorMessage}/>:null}
+            {(loginResponse.isError || registerResponse.isError) && errorMessage ? <Notification type='error' message={errorMessage}/>:null}
         </div>
         <form className={styles.form}>
             <label className={styles.label}>
