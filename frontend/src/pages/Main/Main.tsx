@@ -10,32 +10,37 @@ const Main = () => {
     {
       text: "favorites",
       link: "/favorites",
-      imgLink: "img/burger/favorites.svg"
+      imgLink: "/img/burger/favorites.svg"
     },
     {
       text: "playlists",
       link: "/playlists",
-      imgLink: "img/burger/favorites.svg"
+      imgLink: "/img/burger/favorites.svg"
     },
     {
       text: "your playlists",
       link: "/playlists/local",
-      imgLink: "img/burger/favorites.svg"
+      imgLink: "/img/burger/favorites.svg"
     },
     {
       text: "music",
       link: "/music",
-      imgLink: "img/burger/music.svg"
+      imgLink: "/img/burger/music.svg"
+    },
+    {
+      text: "your music",
+      link: "/music/local",
+      imgLink: "/img/burger/favorites.svg"
     },
     {
       text: "create playlist",
       link: "/create/playlist",
-      imgLink: "img/burger/favorites.svg"
+      imgLink: "/img/burger/favorites.svg"
     },
     {
       text: "create music",
       link: "/create/music",
-      imgLink: "img/burger/favorites.svg"
+      imgLink: "/img/burger/favorites.svg"
     }
   ]
   return (

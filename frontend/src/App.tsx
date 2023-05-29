@@ -14,13 +14,6 @@ const App = () => {
   },[])
 
   useEffect(() => {
-    if(res.isSuccess) {
-      navigate("/")
-    }
-  },[res.isSuccess,navigate])
-
-
-  useEffect(() => {
     if(res.isError){
       navigate("/login")
     }

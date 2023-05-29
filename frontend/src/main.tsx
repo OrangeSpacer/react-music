@@ -8,6 +8,7 @@ import App from './App.tsx'
 import Login from './pages/Login/Login.tsx'
 import Profile from './pages/Profile/Profile.tsx'
 import CreateMusic from './pages/CreateMusic/CreateMusic.tsx'
+import YourMusic from './pages/YourMusic/YourMusic.tsx'
 
 interface IPrivateRote {
   element: any,
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path:"/music",
         element: <Musics/>
+      },
+      {
+        path:"/music/local",
+        element: <PrivateRoute element={<YourMusic/>}/>
       },
       {
         path: "/login",

@@ -123,7 +123,6 @@ export class UserController extends Routes implements IUserController {
 			}
 			const { refreshToken } = req.cookies;
 			const userData: any = await this.userService.refresh(refreshToken);
-			console.log(userData);
 			res.cookie("refreshToken", userData.token.refreshToken, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
