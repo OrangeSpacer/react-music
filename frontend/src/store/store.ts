@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { musicApi } from "./api/music/music.api";
 import authSlice from "./features/auth/authSlice";
 import { apiSlice } from "./api/apiSlice";
+import yourMusicSlice from "./features/yourMusic/yourMusicSlice";
 
 const rootReducers = combineReducers({
     loginReducer: authSlice,
+    yourMusicReducer: yourMusicSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
     [musicApi.reducerPath]: musicApi.reducer,
 });

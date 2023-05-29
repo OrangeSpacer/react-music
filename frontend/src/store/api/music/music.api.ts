@@ -7,7 +7,7 @@ export const musicApi = apiSlice.injectEndpoints({
             query: () => "/track/all"
         }),
         getYourMusic: builder.mutation<IMusicData[], string>({
-            query: (payload) => ({
+            query: () => ({
                 url: "/track/your",
                 method: "GET",
             })
@@ -19,7 +19,13 @@ export const musicApi = apiSlice.injectEndpoints({
                 body: payload,
             })
         }),
+        dleteYourTrack: builder.mutation({
+            query: (payload) => ({
+                url: `/track/delete?id=${payload}`,
+                method: "DELETE",
+            })
+        }),
     })
 })
 
-export const {useGetMusicAllQuery, useGetYourMusicMutation, useCreateTrackMutation} = musicApi
+export const {useGetMusicAllQuery, useGetYourMusicMutation, useCreateTrackMutation, useDleteYourTrackMutation} = musicApi
