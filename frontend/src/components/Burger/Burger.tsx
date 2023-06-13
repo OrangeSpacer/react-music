@@ -15,6 +15,7 @@ const Burger = ({listLink}:IBurger): JSX.Element => {
 
     const onLogout = () => {
         logout("")
+        localStorage.removeItem("token")
         navigate("/login")
     }
 
@@ -35,7 +36,7 @@ const Burger = ({listLink}:IBurger): JSX.Element => {
         </div>
         <div className={styles.logoutBlock}>
             <div className={styles.logoutImgBlock}>
-                <img src="img/burger/logout.svg" alt="logoutImg" className={styles.logoutImg} />
+                <img src="/img/burger/logout.svg" alt="logoutImg" className={styles.logoutImg} />
             </div>
             <div className={styles.logoutText} onClick={onLogout}>
                 Log out

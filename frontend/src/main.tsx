@@ -9,6 +9,7 @@ import Login from './pages/Login/Login.tsx'
 import Profile from './pages/Profile/Profile.tsx'
 import CreateMusic from './pages/CreateMusic/CreateMusic.tsx'
 import YourMusic from './pages/YourMusic/YourMusic.tsx'
+import CreatePlaylist from './pages/CreatePlaylist/CreatePlaylist.tsx'
 
 interface IPrivateRote {
   element: any,
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         element: <Musics/>
       },
       {
+        path: "/login",
+        element: <Login/>
+      },
+      {
         path:"/music",
         element: <Musics/>
       },
@@ -42,12 +47,12 @@ const router = createBrowserRouter([
         element: <PrivateRoute element={<YourMusic/>}/>
       },
       {
-        path: "/login",
-        element: <Login/>
-      },
-      {
         path:"/create/music",
         element: <PrivateRoute element={<CreateMusic/>}/>
+      },
+      {
+        path:"/create/playlist",
+        element: <PrivateRoute element={<CreatePlaylist/>}/>
       },
       {
         path:"/profile",

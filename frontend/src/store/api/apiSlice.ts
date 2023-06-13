@@ -17,11 +17,10 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args:string | FetchArgs, api:BaseQueryApi, extraOptions: any ) => {
     let result = await baseQuery(args, api, extraOptions)
-    if (result?.error?.status === 401 || result?.error?.status === 400) {
+    if (result?.error?.status === 401) {
         console.log('sending refresh token')
         const refreshResult = await baseQuery("/user/refresh", api, extraOptions)
         if(refreshResult?.data) {
-
             api.dispatch(login(refreshResult.data as ILogin))
             result = await baseQuery(args, api, extraOptions)
         } else {
