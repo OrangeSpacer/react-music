@@ -1,0 +1,36 @@
+@import "../../styles/variable";
+
+.playlist{
+    cursor: default;
+    padding: 10px;
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    border: 1px solid $semi-black;
+    background: $semi-black;
+    transition: all 0.5s ease;
+    &:hover{
+        transition: all 0.5s ease;
+        background: $dark-black;
+    }
+}
+
+.imgBlock{
+    text-align: center;
+}
+
+.img{
+    border-radius: 25px;
+    height: 150px;
+    width: 150px;
+}
+
+.title{
+    font-size: 18px;
+    color: $white;
+}
+
+.tracks{
+    font-size: 15px;
+    color: $white;
+}
