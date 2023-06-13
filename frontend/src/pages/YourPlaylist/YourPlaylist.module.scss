@@ -1,0 +1,11 @@
+.playlists{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    overflow-y: visible;
+    justify-content: center;
+}
+
+.link{
+    text-decoration: none;
+}

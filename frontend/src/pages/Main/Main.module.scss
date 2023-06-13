@@ -7,6 +7,19 @@
     height: 100vh;
 }
 
+.content{
+    overflow-y: auto;
+    &::-webkit-scrollbar{
+        width: 10px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: $blue;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
+
 .burger{
     background-color: $dark-black;
 }
