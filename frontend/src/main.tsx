@@ -10,7 +10,7 @@ import Profile from './pages/Profile/Profile.tsx'
 import CreateMusic from './pages/CreateMusic/CreateMusic.tsx'
 import YourMusic from './pages/YourMusic/YourMusic.tsx'
 import CreatePlaylist from './pages/CreatePlaylist/CreatePlaylist.tsx'
-import YourPlaylist from './pages/YourPlaylist/YourPlaylist.tsx'
+import YourPlaylist from './pages/YourPlaylists/YourPlaylists.tsx'
 
 interface IPrivateRote {
   element: any,
