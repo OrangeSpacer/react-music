@@ -1,5 +1,9 @@
 @import "../../styles/variable";
 
+.link{
+    text-decoration: none;
+}
+
 .playlist{
     cursor: default;
     padding: 10px;
@@ -14,6 +18,7 @@
         background: $dark-black;
     }
 }
+
 
 .imgBlock{
     text-align: center;
