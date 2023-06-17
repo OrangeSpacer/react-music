@@ -14,8 +14,15 @@ export const playlistApi = apiSlice.injectEndpoints({
                 url: "/playlist/your",
                 method: "GET"
             })
+        }),
+        getPlaylistForId: builder.mutation({
+            query: (id) => ({
+                url: "/playlist/get",
+                method: "POST",
+                params: {id}
+            })
         })
     })
 })
 
-export const {useCreatePlaylistMutation, useGetLocalPlaylistsMutation} = playlistApi
+export const {useCreatePlaylistMutation, useGetLocalPlaylistsMutation, useGetPlaylistForIdMutation} = playlistApi

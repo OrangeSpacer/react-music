@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { useDleteYourTrackMutation, useGetYourMusicMutation } from '../../store/api/music/music.api'
-import Music from '../../components/Music/Music'
 import { setMusic,deleteMusic } from '../../store/features/yourMusic/yourMusicSlice'
 import { IMusicData } from '../../types/music.interface'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import MusicBlock from '../../components/MusicBlock/MusicBlock'
 
 const YourMusic = () => {
     const [getMusic,res] = useGetYourMusicMutation()
-    const [deleteReqMusic,deleteRes] = useDleteYourTrackMutation()
+    const [deleteReqMusic] = useDleteYourTrackMutation()
     const {data} = useAppSelector(state => state.yourMusicReducer)
     const dispatch = useAppDispatch()
     useEffect(() => {
@@ -29,9 +29,11 @@ const YourMusic = () => {
       }
     }
 
+    console.log(data)
+
     return (
     <div>
-        {(res.isSuccess && data) ? data.map((music:any) => <Music deleteMusic={() => handleDelte(music._id)} musicData={music} key={music._id}/>): null}
+        {(res.isSuccess && data) ? <MusicBlock musics={data} title='Your music' deleteMusic={handleDelte}/>: null}
     </div>
   )
 }
