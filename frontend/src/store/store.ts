@@ -4,13 +4,15 @@ import authSlice from "./features/auth/authSlice";
 import { apiSlice } from "./api/apiSlice";
 import yourMusicSlice from "./features/yourMusic/yourMusicSlice";
 import { playlistApi } from "./api/playlist/playlist.api";
+import { favoritesApi } from "./api/favorites/favorites.api";
 
 const rootReducers = combineReducers({
     loginReducer: authSlice,
     yourMusicReducer: yourMusicSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
     [musicApi.reducerPath]: musicApi.reducer,
-    [playlistApi.reducerPath]: playlistApi.reducer
+    [playlistApi.reducerPath]: playlistApi.reducer,
+    [favoritesApi.reducerPath]: favoritesApi.reducer
 });
 
 export const store = configureStore({

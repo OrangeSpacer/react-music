@@ -8,7 +8,7 @@ const Playlist = ({id,title,tracksLength}: IPlaylistProps) => {
     <Link to={`/playlists/${id}`} className={styles.link}>
         <div className={styles.playlist}>
             <div className={styles.imgBlock}>
-                <img src="/img/playlist/playlist.jpg" alt="imgPlaylist" className={styles.img}/>
+                <img src="/img/playlist/playlist.jpg" loading="lazy" alt="imgPlaylist" className={styles.img}/>
             </div>
             <div className={styles.infoBlock}>
                 <div className={styles.title}>

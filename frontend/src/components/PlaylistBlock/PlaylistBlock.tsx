@@ -12,7 +12,7 @@ const PlaylistBlock = ({title,fetchData}:IPlaylistBlock) => {
         <div className={styles.content}>
             <div className={styles.playlists}>
                 <div className={styles.playlists}>
-                        {fetchData?.map((playlist:IPlaylist) => <Playlist id={playlist._id} title={playlist.title} tracksLength={playlist.tracks.length}/>)}
+                        {fetchData?.map((playlist:IPlaylist) => <Playlist id={playlist._id} title={playlist.title} key={playlist._id} tracksLength={playlist.tracks.length}/>)}
                 </div>
             </div>
         </div>
