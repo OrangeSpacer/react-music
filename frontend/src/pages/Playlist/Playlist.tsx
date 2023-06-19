@@ -7,7 +7,7 @@ const Playlist = () => {
     const location = useLocation()
     const [getPlaylist, res] = useGetPlaylistForIdMutation()
     useEffect(() => {
-        getPlaylist(location.pathname.split("/")[3])
+        getPlaylist(location.pathname.split("/")[2])
     },[])
 
   return (

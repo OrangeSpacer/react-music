@@ -12,6 +12,7 @@ import YourMusic from './pages/YourMusic/YourMusic.tsx'
 import CreatePlaylist from './pages/CreatePlaylist/CreatePlaylist.tsx'
 import YourPlaylist from './pages/YourPlaylists/YourPlaylists.tsx'
 import Playlist from './pages/Playlist/Playlist.tsx'
+import AllPlaylists from './pages/AllPlaylists/AllPlaylists.tsx'
 
 interface IPrivateRote {
   element: any,
@@ -45,11 +46,19 @@ const router = createBrowserRouter([
         element: <Musics/>
       },
       {
+        path: "/playlists/all",
+        element: <AllPlaylists/>
+      },
+      {
         path: "/playlists/local",
         element: <PrivateRoute element={<YourPlaylist/>}/>
       },
       {
-        path: "/playlists/local/:playlistId",
+        path: "/playlists/local",
+        element: <PrivateRoute element={<YourPlaylist/>}/>
+      },
+      {
+        path: "/playlists/:playlistId",
         element: <PrivateRoute element={<Playlist/>}/>
       },
       {

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 const Playlist = ({id,title,tracksLength}: IPlaylistProps) => {
   return (
-    <Link to={id} className={styles.link}>
+    <Link to={`/playlists/${id}`} className={styles.link}>
         <div className={styles.playlist}>
             <div className={styles.imgBlock}>
                 <img src="/img/playlist/playlist.jpg" alt="imgPlaylist" className={styles.img}/>
