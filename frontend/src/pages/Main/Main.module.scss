@@ -8,6 +8,7 @@
 }
 
 .content{
+    position: relative;
     overflow-y: auto;
     &::-webkit-scrollbar{
         width: 10px;

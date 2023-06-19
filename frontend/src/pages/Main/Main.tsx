@@ -14,7 +14,7 @@ const Main = () => {
     },
     {
       text: "playlists",
-      link: "/playlists",
+      link: "/playlists/all",
       imgLink: "/img/burger/favorites.svg"
     },
     {
