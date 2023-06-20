@@ -1,9 +1,6 @@
-import Music from "../../components/Music/Music"
-import Button from "../../components/UI/Button/Button"
-import Title from "../../components/UI/Title/Title"
+import Loader from "../../components/Loader/Loader"
+import MusicBlock from "../../components/MusicBlock/MusicBlock"
 import { useGetMusicAllQuery } from "../../store/api/music/music.api"
-
-import styles from "./Music.module.scss"
 
 const Musics = () => {
     const {data, error, isLoading} = useGetMusicAllQuery("")
@@ -15,21 +12,12 @@ const Musics = () => {
     if(error){
       return <div>Что-то пошло не так</div>
     }
+
+
   return (
     <div>
-        <div className={styles.titleBlock}>
-            <div>
-                <Title text="All music"/>
-            </div>
-            <div>
-                <Button func={() => console.log("play music")} typeView="circle">
-                    Play
-                </Button>
-            </div>
-        </div>
-        <div className={styles.musicBlock}>
-            {data?.map(music => <Music key={music._id} musicData={music}/>)}
-        </div>
+      {isLoading ? <Loader/>:null}
+      {data ? <MusicBlock title="All music" musics={data}/>:null}
     </div>
   )
 }
