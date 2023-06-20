@@ -1,38 +1,67 @@
 import Button from '../UI/Button/Button'
 import { IMusic } from './Music.props'
+import { useEffect, useState } from 'react'
+import MusicFunc from './MusicFunc/MusicFunc'
+import { useAddInFavortiesMutation, useDeleteInFavortiesMutation } from '../../store/api/favorites/favorites.api'
 
 import styles from "./Music.module.scss"
 
-import { useState } from 'react'
-import MusicFunc from './MusicFunc/MusicFunc'
 
-const Music = ({musicData,deleteMusic}:IMusic) => {
+const Music = ({musicData,deleteMusic,isFavorties,addInPlaylist,deleteInPlaylist}:IMusic) => {
     const [openFunc,setOpenFunc] = useState(false)
+    const [favorties, setFavorties] = useState(isFavorties)
+    const [addFavorites] = useAddInFavortiesMutation()
+    const [removeFavorties] = useDeleteInFavortiesMutation()
+
+    useEffect(() => {
+        const favortiesCheck = isFavorties
+        if(favortiesCheck) {
+            setFavorties(favortiesCheck)
+        }
+    },[isFavorties])
 
     const handleOpen = () => {
         setOpenFunc(!openFunc)
     }
 
+    const handleFavorties = () => {
+        console.log(favorties)
+        if(favorties == true) {
+            removeFavorties({trackId: musicData._id})
+            setFavorties(prev => !prev)
+        } else {
+            addFavorites({trackId: musicData._id})
+            setFavorties(prev => !prev)
+        }
+    }
+
     return (
     <div className={styles.music}>
-        <Button typeView='circle' func={() => console.log("Play music")}>
-            play
-        </Button>
-        <div className={styles.logo}>
-            <img src={"http://127.0.0.1:5000/" + musicData.imagePath} alt="musicImg" />
-        </div>
-        <div className={styles.info}>
-            <div className={styles.title}>
-                {musicData.title}
+        <div className={styles.left}>
+            <Button typeView='circle' func={() => console.log("Play music")}>
+                play
+            </Button>
+            <div className={styles.logo}>
+                <img src={"http://127.0.0.1:5000/" + musicData.imagePath} alt="musicImg" />
             </div>
-            <div className={styles.author}>
-                {musicData.author}
+            <div className={styles.info}>
+                <div className={styles.title}>
+                    {musicData.title}
+                </div>
+                <div className={styles.author}>
+                    {musicData.author}
+                </div>
             </div>
         </div>
-        <button className={styles.function} onClick={handleOpen}>
-            <img src="/img/music/function.svg" alt="function" />
-        </button>
-        {openFunc === true ? <MusicFunc  handleDelete={deleteMusic} id={musicData._id}/>:null}
+        <div className={styles.right}>
+            <button onClick={handleFavorties}>
+                {favorties ? <img src='/img/music/inFavorites.png' style={{width:"15px"}}/>:<img src='/img/music/notFavorites.png' style={{width:"15px"}}/>}
+            </button>
+            <button className={styles.function} onClick={handleOpen}>
+                <img src="/img/music/function.svg" alt="function" />
+            </button>
+            {openFunc === true ? <MusicFunc  handleDelete={deleteMusic ? deleteMusic:null} id={musicData._id}/>:null}
+        </div>
     </div>
     )
 }

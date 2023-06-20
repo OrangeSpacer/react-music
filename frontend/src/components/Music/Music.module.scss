@@ -1,15 +1,28 @@
 @import "../../styles/variable";
 
 .music {
-    display: grid;
-    align-items: center;
+    display: flex;
+    justify-content: space-between;
     border: 1px solid $semi-black;
     border-radius: 5px;
     padding: 5px 15px;
-    grid-template-columns: 40px 55px 1fr auto;
     &:hover{
         background: $dark-black;
     }
+}
+
+.left{
+    display: grid;
+    align-items: center;
+    grid-template-columns: 40px 75px 60px;
+    gap: 15px;
+}
+
+.right {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 40px 40px;
+    gap: 15px;
 }
 
 .logo{

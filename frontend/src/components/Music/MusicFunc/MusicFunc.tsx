@@ -1,11 +1,17 @@
 import { useDleteYourTrackMutation } from '../../../store/api/music/music.api'
 
-const MusicFunc = ({id,handleDelete}: any) => {
+const MusicFunc = () => {
   return (
     <div>
-        <button onClick={handleDelete}>
-            delete
-        </button>
+        <div>
+          add to playlist
+        </div>
+        <div>
+          add to favorites
+        </div>
+        <div>
+
+        </div>
     </div>
   )
 }
