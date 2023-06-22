@@ -2,16 +2,13 @@ import Button from '../UI/Button/Button'
 import { IMusic } from './Music.props'
 import { useEffect, useState } from 'react'
 import MusicFunc from './MusicFunc/MusicFunc'
-import { useAddInFavortiesMutation, useDeleteInFavortiesMutation } from '../../store/api/favorites/favorites.api'
 
 import styles from "./Music.module.scss"
 
 
-const Music = ({musicData,deleteMusic,isFavorites,addInPlaylist,deleteInPlaylist}:IMusic) => {
+const Music = ({musicData,deleteMusic,isFavorites, addFavorties, deleteFavorites,addInPlaylist,deleteInPlaylist}:IMusic) => {
     const [openFunc,setOpenFunc] = useState(false)
     const [favorties, setFavorties] = useState(isFavorites)
-    const [addFavorites] = useAddInFavortiesMutation()
-    const [removeFavorties] = useDeleteInFavortiesMutation()
 
     useEffect(() => {
         const favortiesCheck = isFavorites
@@ -26,10 +23,14 @@ const Music = ({musicData,deleteMusic,isFavorites,addInPlaylist,deleteInPlaylist
 
     const handleFavorties = () => {
         if(favorties == true) {
-            removeFavorties({trackId: musicData._id})
+            if(deleteFavorites) {
+                deleteFavorites()
+            }
             setFavorties(prev => !prev)
         } else {
-            addFavorites({trackId: musicData._id})
+            if(addFavorties) {
+                addFavorties()
+            }
             setFavorties(prev => !prev)
         }
     }
@@ -53,9 +54,12 @@ const Music = ({musicData,deleteMusic,isFavorites,addInPlaylist,deleteInPlaylist
             </div>
         </div>
         <div className={styles.right}>
-            <button onClick={handleFavorties}>
-                {favorties ? <img src='/img/music/inFavorites.png' style={{width:"15px"}}/>:<img src='/img/music/notFavorites.png' style={{width:"15px"}}/>}
-            </button>
+            {(addFavorties && deleteFavorites) ? 
+                <button onClick={handleFavorties}>
+                    {favorties ? <img src='/img/music/inFavorites.png' style={{width:"15px"}}/>:<img src='/img/music/notFavorites.png' style={{width:"15px"}}/>}
+                </button>:
+                null
+            }
             <button className={styles.function} onClick={handleOpen}>
                 <img src="/img/music/function.svg" alt="function" />
             </button>
