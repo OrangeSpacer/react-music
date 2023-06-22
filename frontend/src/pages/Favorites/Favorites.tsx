@@ -1,18 +1,32 @@
 import { useEffect } from 'react'
+import { useGetAllFavoritesMutation } from '../../store/api/favorites/favorites.api'
 import Loader from '../../components/Loader/Loader'
-import MusicBlock from '../../components/MusicBlock/MusicBlock'
-import { useGetAllFavoritesQuery } from '../../store/api/favorites/favorites.api'
+import Title from '../../components/UI/Title/Title'
+import Music from '../../components/Music/Music'
+
+import styles from "./Favorties.module.scss"
 
 const Favorites = () => {
-    const {isLoading,data,isSuccess, refetch} = useGetAllFavoritesQuery("")
+    const [getFavorites,res] = useGetAllFavoritesMutation()
+    
     useEffect(() => {
-      refetch()
-    },[refetch])
+      getFavorites("")
+    },[getFavorites])
 
   return (
     <div>
-        {isLoading && <Loader/>}
-        {isSuccess && data ?  <MusicBlock title='Favorites' musics={data}/>:null}
+        {res.isLoading ? <Loader/>: null}
+        {res.isSuccess ? 
+          <div>
+            <div  className={styles.titleBlock}>
+              <Title text='Favorites'/>
+            </div>
+            <div className={styles.musicBlock}>
+              {res.data && res.data.map(music => <Music key={music._id} musicData={music}/>)}
+            </div>
+          </div>:
+          null
+        }
     </div>
   )
 }
