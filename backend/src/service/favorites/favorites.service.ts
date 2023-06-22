@@ -18,12 +18,12 @@ export class FavoritesService implements IFavoritesService {
 	}
 
 	public async addFavoritesTracK(trackId: string, userId: string): Promise<Object | null> {
-		const { _id }: any = await this.trackService.getForId(trackId);
+		const track: any = await this.trackService.getForId(trackId);
 		const user = await this.repository.user.findById(userId);
-		if (user?.favoritesTrack.indexOf(_id) != -1) {
+		if (user?.favoritesTrack.findIndex((item) => item._id == track._id) != -1) {
 			throw ApiError.badRequset("Этот трек уже добавлен в любимые");
 		}
-		user?.favoritesTrack.push(_id);
+		user?.favoritesTrack.push(track);
 		await user?.save();
 		return user;
 	}
@@ -31,7 +31,7 @@ export class FavoritesService implements IFavoritesService {
 	public async deleteFavoritesTrack(trackId: string, userId: string): Promise<Object | null> {
 		const track: any = await this.trackService.getForId(trackId);
 		const user = await this.repository.user.findById(userId);
-		const index = user?.favoritesTrack.findIndex((item) => item.toString() == track._id);
+		const index = user?.favoritesTrack.findIndex((item) => item._id == track._id.toString());
 		if (index == -1 || index == undefined) {
 			throw ApiError.badRequset("Не удалось найти трек");
 		} else {
