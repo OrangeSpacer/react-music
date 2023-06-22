@@ -2,7 +2,7 @@ import { apiSlice } from "../apiSlice";
 
 export const favoritesApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getAllFavorites: builder.query<string[], string>({
+        getAllFavorites: builder.mutation<string[], string>({
             query: () => "/favorites/all"
         }),
         addInFavorties: builder.mutation<string, object>({
@@ -22,4 +22,4 @@ export const favoritesApi = apiSlice.injectEndpoints({
     })
 })
 
-export const {useGetAllFavoritesQuery, useAddInFavortiesMutation, useDeleteInFavortiesMutation} = favoritesApi
+export const {useGetAllFavoritesMutation, useAddInFavortiesMutation, useDeleteInFavortiesMutation} = favoritesApi

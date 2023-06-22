@@ -7,25 +7,24 @@ import { useAddInFavortiesMutation, useDeleteInFavortiesMutation } from '../../s
 import styles from "./Music.module.scss"
 
 
-const Music = ({musicData,deleteMusic,isFavorties,addInPlaylist,deleteInPlaylist}:IMusic) => {
+const Music = ({musicData,deleteMusic,isFavorites,addInPlaylist,deleteInPlaylist}:IMusic) => {
     const [openFunc,setOpenFunc] = useState(false)
-    const [favorties, setFavorties] = useState(isFavorties)
+    const [favorties, setFavorties] = useState(isFavorites)
     const [addFavorites] = useAddInFavortiesMutation()
     const [removeFavorties] = useDeleteInFavortiesMutation()
 
     useEffect(() => {
-        const favortiesCheck = isFavorties
+        const favortiesCheck = isFavorites
         if(favortiesCheck) {
             setFavorties(favortiesCheck)
         }
-    },[isFavorties])
-
+    },[isFavorites])
+    
     const handleOpen = () => {
         setOpenFunc(!openFunc)
     }
 
     const handleFavorties = () => {
-        console.log(favorties)
         if(favorties == true) {
             removeFavorties({trackId: musicData._id})
             setFavorties(prev => !prev)
