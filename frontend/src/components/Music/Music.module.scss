@@ -1,6 +1,7 @@
 @import "../../styles/variable";
 
 .music {
+    position: relative;
     display: flex;
     justify-content: space-between;
     border: 1px solid $semi-black;

@@ -6,7 +6,7 @@ import MusicFunc from './MusicFunc/MusicFunc'
 import styles from "./Music.module.scss"
 
 
-const Music = ({musicData,deleteMusic,isFavorites, addFavorties, deleteFavorites,addInPlaylist,deleteInPlaylist}:IMusic) => {
+const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavorites,addInPlaylist,deleteInPlaylist}:IMusic) => {
     const [openFunc,setOpenFunc] = useState(false)
     const [favorties, setFavorties] = useState(isFavorites)
 
@@ -54,7 +54,7 @@ const Music = ({musicData,deleteMusic,isFavorites, addFavorties, deleteFavorites
             </div>
         </div>
         <div className={styles.right}>
-            {(addFavorties && deleteFavorites) ? 
+            {(addFavorties || deleteFavorites) ? 
                 <button onClick={handleFavorties}>
                     {favorties ? <img src='/img/music/inFavorites.png' style={{width:"15px"}}/>:<img src='/img/music/notFavorites.png' style={{width:"15px"}}/>}
                 </button>:
@@ -63,7 +63,7 @@ const Music = ({musicData,deleteMusic,isFavorites, addFavorties, deleteFavorites
             <button className={styles.function} onClick={handleOpen}>
                 <img src="/img/music/function.svg" alt="function" />
             </button>
-            {openFunc === true ? <MusicFunc  handleDelete={deleteMusic ? deleteMusic:null} id={musicData._id}/>:null}
+            {openFunc === true ? <MusicFunc trackId={id}  handleDelete={deleteMusic ? deleteMusic:null} id={musicData._id}/>:null}
         </div>
     </div>
     )

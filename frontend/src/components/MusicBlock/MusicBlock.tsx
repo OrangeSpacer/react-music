@@ -39,7 +39,7 @@ const MusicBlock = ({musics,title,addInPlaylist,deleteInPlaylist,deleteMusic}: I
             <Title text={title}/>
         </div>
         <div className={styles.musicBlock}>
-            {res.isSuccess ?  musics.map(music => <Music key={music._id} musicData={music} addFavorties={() => handleAddFavorites(music._id)} deleteFavorites={() => handleDeleteFavorties(music._id)}  isFavorites={handleCheckFavorties(music._id)} addInPlaylist={addInPlaylist} deleteInPlaylist={deleteInPlaylist} deleteMusic={deleteMusic}/>): <Loader/>}
+            {res.isSuccess ?  musics.map(music => <Music id={music._id} key={music._id} musicData={music} addFavorties={() => handleAddFavorites(music._id)} deleteFavorites={() => handleDeleteFavorties(music._id)}  isFavorites={handleCheckFavorties(music._id)} addInPlaylist={addInPlaylist} deleteInPlaylist={deleteInPlaylist} deleteMusic={deleteMusic}/>): <Loader/>}
         </div>
     </div>
   )
