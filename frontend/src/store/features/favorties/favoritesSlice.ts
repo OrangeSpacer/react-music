@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { IMusicData } from "../../../types/music.interface";
 
 interface favoritesState {
-    favorties: string[] | null
+    favorties: IMusicData[] | null
 }
 
 const initialState: favoritesState = {
@@ -12,11 +13,11 @@ export const favoritesSlice = createSlice({
     name: "favortiesSlice",
     initialState,
     reducers: {
-        setFavortiesCheck: (state, action: PayloadAction<string[]>) => {
+        setFavorties: (state, action: PayloadAction<IMusicData[]>) => {
             state.favorties = action.payload
         },
         deleteFavoritesForIdCheck: (state, action: PayloadAction<string>) => {
-            const newFavorties = state.favorties?.filter(item => !(item == action.payload))
+            const newFavorties = state.favorties?.filter(item => !(item._id == action.payload))
             if(newFavorties){
                 state.favorties = newFavorties
             }
@@ -25,6 +26,6 @@ export const favoritesSlice = createSlice({
     }
 })
 
-export const {deleteFavoritesForIdCheck,setFavortiesCheck} = favoritesSlice.actions
+export const {deleteFavoritesForIdCheck,setFavorties} = favoritesSlice.actions
 
 export default favoritesSlice.reducer

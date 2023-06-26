@@ -1,8 +1,9 @@
+import { IMusicData } from "../../../types/music.interface";
 import { apiSlice } from "../apiSlice";
 
 export const favoritesApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getAllFavorites: builder.mutation<string[], string>({
+        getAllFavorites: builder.mutation<IMusicData[], string>({
             query: () => "/favorites/all"
         }),
         addInFavorties: builder.mutation<string, object>({
