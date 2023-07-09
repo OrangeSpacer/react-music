@@ -16,6 +16,9 @@ export const playlistApi = apiSlice.injectEndpoints({
                 method: "GET"
             })
         }),
+        getLocalPlaylistsSingle: builder.query({
+            query: () => "/playlist/your"
+        }),
         getPlaylistForId: builder.mutation({
             query: (id) => ({
                 url: "/playlist/get",
@@ -32,8 +35,22 @@ export const playlistApi = apiSlice.injectEndpoints({
                 method: "POST",
                 body: payload
             })
+        }),
+        dleteTrackFromPlaylist: builder.mutation({
+            query: (payload) => ({
+                url: '/playlist/remove',
+                method: "POST",
+                body: payload
+            })
+        }),
+        deletePlaylist: builder.mutation({
+            query: (id) => ({
+                url: "/playlist/delete",
+                method: "DELETE",
+                params: {id}
+            })
         })
     })
 })
 
-export const {useCreatePlaylistMutation, useGetLocalPlaylistsMutation, useGetPlaylistForIdMutation, useGetPlaylistAllQuery, useAddTrackInPlaylistMutation} = playlistApi
+export const {useCreatePlaylistMutation, useGetLocalPlaylistsMutation, useGetPlaylistForIdMutation, useGetPlaylistAllQuery, useAddTrackInPlaylistMutation, useGetLocalPlaylistsSingleQuery, useDleteTrackFromPlaylistMutation, useDeletePlaylistMutation} = playlistApi
