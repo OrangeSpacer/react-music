@@ -5,14 +5,14 @@ import { IPlaylistBlock } from './PlaylistBlock.props'
 import { IPlaylist } from '../../types/playlist.interface'
 import Playlist from '../Playlist/Playlist'
 
-const PlaylistBlock = ({title,fetchData}:IPlaylistBlock) => {
+const PlaylistBlock = ({title,fetchData,isLocal, removePlaylist}:IPlaylistBlock) => {
   return (
     <div>
         <Title text={title}/>
         <div className={styles.content}>
             <div className={styles.playlists}>
                 <div className={styles.playlists}>
-                        {fetchData?.map((playlist:IPlaylist) => <Playlist id={playlist._id} title={playlist.title} key={playlist._id} tracksLength={playlist.tracks.length}/>)}
+                        {fetchData?.map((playlist:IPlaylist) => <Playlist deleteFunc={() => removePlaylist(playlist._id)} isLocal={isLocal} id={playlist._id} title={playlist.title} key={playlist._id} tracksLength={playlist.tracks.length}/>)}
                 </div>
             </div>
         </div>

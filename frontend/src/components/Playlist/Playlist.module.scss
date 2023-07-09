@@ -19,6 +19,11 @@
     }
 }
 
+.content {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 .imgBlock{
     text-align: center;
@@ -38,4 +43,9 @@
 .tracks{
     font-size: 15px;
     color: $white;
+}
+
+.deleteBtn{
+    z-index: 10000;
+    cursor: pointer;
 }
