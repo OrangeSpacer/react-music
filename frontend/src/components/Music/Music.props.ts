@@ -2,8 +2,10 @@ import { IMusicData } from "../../types/music.interface";
 
 export interface IMusic {
     id: string
+    playlistId?: string
     musicData: IMusicData
-    isFavorites?: boolean
+    isFavorites?: boolean,
+    isLocal: boolean
     addFavorties?: () => void;
     deleteFavorites?: () => void;
     deleteMusic?: () => void

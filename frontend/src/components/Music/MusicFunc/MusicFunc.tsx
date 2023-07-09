@@ -1,19 +1,26 @@
 import { useState } from 'react'
-import { useDleteYourTrackMutation } from '../../../store/api/music/music.api'
 import { IMusicFuncProps } from './MusicFunc.props'
-import { useAddTrackInPlaylistMutation, useGetPlaylistAllQuery } from '../../../store/api/playlist/playlist.api'
+import { useAddTrackInPlaylistMutation,useDleteTrackFromPlaylistMutation,useGetLocalPlaylistsSingleQuery} from '../../../store/api/playlist/playlist.api'
 
 
 import styles from "./MusicFunc.module.scss"
 import Notification from '../../Notification/Notification'
+import { IPlaylist } from '../../../types/playlist.interface'
 
-const MusicFunc = ({deleteInPlaylistFunc,trackId}: IMusicFuncProps) => {
+const MusicFunc = ({deleteInPlaylistFunc,trackId, playlistId}: IMusicFuncProps) => {
   const [playlistOpen,setPlaylistOpen] = useState(false)
   const [addTrack,res] = useAddTrackInPlaylistMutation()
-  const {data} = useGetPlaylistAllQuery("")
+  const [deleteTrack] = useDleteTrackFromPlaylistMutation()
+  const {data} = useGetLocalPlaylistsSingleQuery("")
+
+  console.log(deleteInPlaylistFunc)
 
   const handleAddTrack = (idPlaylist: string) => {
     addTrack({idPlaylist: idPlaylist, idTrack: trackId})
+  }
+
+  const handleDeleteFromPlaylist = () => {
+    deleteTrack({idPlaylist: playlistId, idTrack: trackId})
   }
 
   return (
@@ -23,8 +30,8 @@ const MusicFunc = ({deleteInPlaylistFunc,trackId}: IMusicFuncProps) => {
         <div onClick={() => setPlaylistOpen(prev => !prev)} className={styles.openPlaylist}>
           add to playlist
         </div>
-        {deleteInPlaylistFunc && <div>remove track</div>}
-        {playlistOpen && data ? <div className={styles.playlistsBlock}>{data.map(item => <div className={styles.playlist} onClick={() => handleAddTrack(item._id)}>{item.title}</div>)}</div>: null}
+        {deleteInPlaylistFunc && <div onClick={handleDeleteFromPlaylist}>remove track</div>}
+        {playlistOpen && data.length ? <div className={styles.playlistsBlock}>{data.map((item:IPlaylist) => <div key={item._id} className={styles.playlist} onClick={() => handleAddTrack(item._id)}>{item.title}</div>)}</div>: null}
     </div>
   )
 }

@@ -6,9 +6,11 @@ import MusicFunc from './MusicFunc/MusicFunc'
 import styles from "./Music.module.scss"
 
 
-const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavorites,addInPlaylist,deleteInPlaylist}:IMusic) => {
+const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavorites, isLocal, playlistId}:IMusic) => {
     const [openFunc,setOpenFunc] = useState(false)
     const [favorties, setFavorties] = useState(isFavorites)
+
+    console.log(isLocal)
 
     useEffect(() => {
         const favortiesCheck = isFavorites
@@ -63,7 +65,7 @@ const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavori
             <button className={styles.function} onClick={handleOpen}>
                 <img src="/img/music/function.svg" alt="function" />
             </button>
-            {openFunc === true ? <MusicFunc trackId={id}  handleDelete={deleteMusic ? deleteMusic:null} id={musicData._id}/>:null}
+            {openFunc === true ? <MusicFunc trackId={id} deleteInPlaylistFunc={isLocal} handleDelete={deleteMusic ? deleteMusic:null} id={musicData._id}/>:null}
         </div>
     </div>
     )
