@@ -5,11 +5,11 @@ import { useGetPlaylistAllQuery } from '../../store/api/playlist/playlist.api'
 import styles from "./AllPlaylists.module.scss"
 
 const AllPlaylists = () => {
-  const {isLoading,data,} = useGetPlaylistAllQuery("")
+  const {isLoading,data} = useGetPlaylistAllQuery("")
 
   return (
     <div className={styles.playlists}>
-      {isLoading ? <Loader/>: <PlaylistBlock title='All playlists' fetchData={data}/>}
+      {isLoading  ? <Loader/>: <PlaylistBlock title='All playlists' isLocal={false} fetchData={data}/>}
     </div>
   )
 }

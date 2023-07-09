@@ -55,12 +55,12 @@ const router = createBrowserRouter([
         element: <PrivateRoute element={<YourPlaylist/>}/>
       },
       {
-        path: "/playlists/local",
-        element: <PrivateRoute element={<YourPlaylist/>}/>
+        path: "/playlists/local/:playlistId",
+        element: <PrivateRoute element={<Playlist isLocal={true}/>}/>
       },
       {
         path: "/playlists/:playlistId",
-        element: <PrivateRoute element={<Playlist/>}/>
+        element: <PrivateRoute element={<Playlist isLocal={false}/>}/>
       },
       {
         path:"/music/local",
