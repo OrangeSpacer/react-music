@@ -7,15 +7,13 @@ import { useAddInFavortiesMutation, useDeleteInFavortiesMutation, useGetAllFavor
 import Loader from '../Loader/Loader'
 import { useCallback, useEffect } from 'react'
 
-const MusicBlock = ({musics,title,addInPlaylist,deleteInPlaylist,deleteMusic}: IMusicBlock) => {
+const MusicBlock = ({musics,title,isLocal,playlistId}: IMusicBlock) => {
   const [getFavorites, res] = useGetAllFavoritesMutation()
   const [addFavorites] = useAddInFavortiesMutation()
   const [deleteFavorties] = useDeleteInFavortiesMutation()
   useEffect(() => {
     getFavorites("")
   },[getFavorites])
-
-
 
   const handleCheckFavorties = useCallback((id:string):boolean => {
     if(res.data?.findIndex(item => item._id == id) !== -1) {
@@ -39,7 +37,7 @@ const MusicBlock = ({musics,title,addInPlaylist,deleteInPlaylist,deleteMusic}: I
             <Title text={title}/>
         </div>
         <div className={styles.musicBlock}>
-            {res.isSuccess ?  musics.map(music => <Music id={music._id} key={music._id} musicData={music} addFavorties={() => handleAddFavorites(music._id)} deleteFavorites={() => handleDeleteFavorties(music._id)}  isFavorites={handleCheckFavorties(music._id)} addInPlaylist={addInPlaylist} deleteInPlaylist={deleteInPlaylist} deleteMusic={deleteMusic}/>): <Loader/>}
+            {res.isSuccess ?  musics.map(music => <Music playlistId={playlistId} isLocal={isLocal} id={music._id} key={music._id} musicData={music} addFavorties={() => handleAddFavorites(music._id)} deleteFavorites={() => handleDeleteFavorties(music._id)}  isFavorites={handleCheckFavorties(music._id)}/>): <Loader/>}
         </div>
     </div>
   )
