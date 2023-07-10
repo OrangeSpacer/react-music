@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 const Playlist = ({id,title,tracksLength, isLocal, deleteFunc}: IPlaylistProps) => {
   return (
-    <div>
+    <div className={styles.mainBlock}>
         <Link to={isLocal ? `/playlists/local/${id}`:`/playlists/${id}`} className={styles.link}>
             <div className={styles.playlist}>
                 <div className={styles.imgBlock}>
@@ -23,7 +23,7 @@ const Playlist = ({id,title,tracksLength, isLocal, deleteFunc}: IPlaylistProps) 
                 </div>
             </div>
         </Link>
-        {deleteFunc && 
+        {deleteFunc && isLocal && 
             <div onClick={deleteFunc} className={styles.deleteBtn}>
                 <img src="/img/playlist/delete.svg"/>
             </div>
