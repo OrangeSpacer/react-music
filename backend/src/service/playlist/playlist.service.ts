@@ -53,6 +53,7 @@ export class PlaylistService implements IPlaylisrService {
 		const candidateTrack = await this.repository.track.findOne({ _id: idTrack });
 		this.check(!candidateTrack, "Не удалось найти трек");
 		const candidatePlaylist = await this.repository.playlist.findOne({ _id: idPlaylist });
+		console.log(idPlaylist);
 		if (candidatePlaylist?.author != authorPlaylist) {
 			throw ApiError.badRequset("У вас нет прав для выполнения данного действия");
 		}
@@ -71,9 +72,11 @@ export class PlaylistService implements IPlaylisrService {
 		idTrack: string,
 		authorPlaylist: string,
 	): Promise<string | null> {
+		console.log(idPlaylist, idTrack, authorPlaylist);
 		const candidateTrack = await this.repository.track.findOne({ _id: idTrack });
 		this.check(!candidateTrack, "Не удалось найти трек");
 		const candidatePlaylist = await this.repository.playlist.findOne({ _id: idPlaylist });
+		console.log(idPlaylist);
 		if (candidatePlaylist?.author != authorPlaylist) {
 			throw ApiError.badRequset("У вас нет прав для выполнения данного действия");
 		}

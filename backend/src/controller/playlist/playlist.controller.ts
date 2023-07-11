@@ -43,6 +43,11 @@ export class PlaylistController extends Routes implements IPlaylistController {
 				method: "delete",
 				func: this.deletePlayList,
 			},
+			{
+				path: "/remove",
+				method: "delete",
+				func: this.deleteTrack,
+			},
 		]);
 	}
 	public async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -111,12 +116,12 @@ export class PlaylistController extends Routes implements IPlaylistController {
 
 	public async deleteTrack(req: Request, res: Response, next: NextFunction): Promise<void> {
 		const { refreshToken } = req.cookies;
-		const { idplaylist, idTrack } = req.query;
-		const { email }: any = await this.userService.getInfo(refreshToken);
+		const { idPlaylist, idTrack } = req.query;
+		const { id }: any = await this.userService.getInfo(refreshToken);
 		const deletedTrack = await this.playlistService.deleteTrack(
-			idplaylist as string,
+			idPlaylist as string,
 			idTrack as string,
-			email,
+			id,
 		);
 		res.json(deletedTrack);
 	}
