@@ -8,6 +8,7 @@ export interface IMusic {
     isLocal: boolean
     addFavorties?: () => void;
     deleteFavorites?: () => void;
+    removeFromPlaylist?: () => void;
     deleteMusic?: () => void
     addInPlaylist?: () => void;
     deleteInPlaylist?: () => void;

@@ -1,5 +1,5 @@
 export interface IMusicFuncProps {
-    deleteInPlaylistFunc: boolean
+    deleteTrack?: (id: string) => void;
     trackId: string
     playlistId?: string
 }
