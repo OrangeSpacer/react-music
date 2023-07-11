@@ -30,7 +30,7 @@ const YourMusic = () => {
     return (
     <div>
         {isLoading ? <Loader/>:null}
-        {(musics && data) ? <MusicBlock musics={data} title='Your music' deleteMusic={handleDelte}/>: null}
+        {(musics && data) ? <MusicBlock  musics={data} title='Your music' deleteMusic={handleDelte}/>: null}
     </div>
   )
 }
