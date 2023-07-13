@@ -7,12 +7,14 @@ import { playlistApi } from "./api/playlist/playlist.api";
 import { favoritesApi } from "./api/favorites/favorites.api";
 import favoritesSlice from "./features/favorties/favoritesSlice";
 import  yourPlaylist  from "./features/yourPlaylist/yourPlaylist.slice";
+import playerSlice from "./features/player/playerSlice";
 
 const rootReducers = combineReducers({
     loginReducer: authSlice,
     yourMusicReducer: yourMusicSlice,
     yourPlaylist: yourPlaylist,
     favoritesReducer: favoritesSlice,
+    playerReducer: playerSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
     [musicApi.reducerPath]: musicApi.reducer,
     [playlistApi.reducerPath]: playlistApi.reducer,
