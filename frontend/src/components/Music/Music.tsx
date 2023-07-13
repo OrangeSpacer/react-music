@@ -4,13 +4,20 @@ import { useEffect, useState } from 'react'
 import MusicFunc from './MusicFunc/MusicFunc'
 
 import styles from "./Music.module.scss"
+import { useAppDispatch } from '../../hooks/redux'
+import { setCurrentTrack,pauseMusic } from '../../store/features/player/playerSlice'
 
 
-const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavorites, isLocal,removeFromPlaylist}:IMusic) => {
+const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavorites, isLocal,removeFromPlaylist,playMusic, isPlaying = false,pauseMusic}:IMusic) => {
+    const [playTrack,setPlayTrack] = useState(isPlaying)
     const [openFunc,setOpenFunc] = useState(false)
     const [favorties, setFavorties] = useState(isFavorites)
+    const dispatch = useAppDispatch()
 
-    console.log(isLocal)
+
+    useEffect(() => {
+        setPlayTrack(isPlaying)
+    },[isPlaying])
 
     useEffect(() => {
         const favortiesCheck = isFavorites
@@ -37,14 +44,34 @@ const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavori
         }
     }
 
+    const handlePlayMusic = () => {
+        if(playMusic){
+            playMusic()
+        }
+        setPlayTrack(true)
+        dispatch(setCurrentTrack(id))
+    }
 
-    console.log(deleteMusic)
+    const handlePauseMusic = () => {
+        if(pauseMusic){
+            pauseMusic()
+        }
+        setPlayTrack(false)
+        dispatch(setCurrentTrack(id))
+    }
+
+
     return (
     <div className={styles.music}>
         <div className={styles.left}>
-            <Button typeView='circle' func={() => console.log("Play music")}>
-                play
-            </Button>
+            {playTrack ? 
+                <Button typeView='circle' func={handlePauseMusic}>
+                    stop
+                </Button>:
+                <Button typeView='circle' func={handlePlayMusic}>
+                    play
+                </Button>
+            }
             <div className={styles.logo}>
                 <img src={"http://127.0.0.1:5000/" + musicData.imagePath} alt="musicImg" />
             </div>

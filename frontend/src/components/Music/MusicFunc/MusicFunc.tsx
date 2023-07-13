@@ -26,7 +26,7 @@ const MusicFunc = ({deleteTrack,trackId}: IMusicFuncProps) => {
         <div onClick={() => setPlaylistOpen(prev => !prev)} className={styles.openPlaylist}>
           add to playlist
         </div>
-        <div onClick={() => deleteTrack(trackId)}>remove track</div>
+        {deleteTrack && <div onClick={() => deleteTrack(trackId)}>remove track</div>}
         {playlistOpen && data.length ? <div className={styles.playlistsBlock}>{data.map((item:IPlaylist) => <div key={item._id} className={styles.playlist} onClick={() => handleAddTrack(item._id)}>{item.title}</div>)}</div>: null}
     </div>
   )

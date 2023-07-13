@@ -6,6 +6,9 @@ export interface IMusic {
     musicData: IMusicData
     isFavorites?: boolean,
     isLocal: boolean
+    isPlaying: boolean
+    playMusic?: () => void;
+    pauseMusic?: () => void;
     addFavorties?: () => void;
     deleteFavorites?: () => void;
     removeFromPlaylist?: () => void;
