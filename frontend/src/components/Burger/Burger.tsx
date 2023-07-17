@@ -10,7 +10,7 @@ const Burger = ({listLink}:IBurger): JSX.Element => {
     const navigate = useNavigate()
 
     const profileHandler = () => {
-        navigate("/profile")
+        navigate("/login")
     }
 
     const onLogout = () => {
@@ -23,7 +23,7 @@ const Burger = ({listLink}:IBurger): JSX.Element => {
     <div className={styles.burger}>
         <div className={styles.profile}>
             <Button func={profileHandler} typeView="rounded">
-                profile
+                Log in
             </Button>
         </div>
         <div className={styles.links}>

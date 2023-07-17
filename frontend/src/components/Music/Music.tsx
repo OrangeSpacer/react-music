@@ -5,7 +5,7 @@ import MusicFunc from './MusicFunc/MusicFunc'
 
 import styles from "./Music.module.scss"
 import { useAppDispatch } from '../../hooks/redux'
-import { setCurrentTrack,pauseMusic } from '../../store/features/player/playerSlice'
+import { setCurrentTrack } from '../../store/features/player/playerSlice'
 
 
 const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavorites, isLocal,removeFromPlaylist,playMusic, isPlaying = false,pauseMusic}:IMusic) => {
@@ -62,14 +62,14 @@ const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavori
 
 
     return (
-    <div className={styles.music}>
+    <div className={styles.music} style={isPlaying ? {borderColor: "#023e7d"}: {borderColor: "#202020"}}>
         <div className={styles.left}>
             {playTrack ? 
                 <Button typeView='circle' func={handlePauseMusic}>
-                    stop
+                    <img src="/img/player/pause.svg" alt="play" />
                 </Button>:
                 <Button typeView='circle' func={handlePlayMusic}>
-                    play
+                    <img src="/img/player/play.svg" alt="play" />
                 </Button>
             }
             <div className={styles.logo}>
@@ -84,7 +84,7 @@ const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavori
                 </div>
             </div>
         </div>
-        <div className={styles.right}>
+        <div className={styles.right} style={!isLocal ? {gridTemplateColumns: "40px 40px"}: {gridTemplateColumns: "40px 40px 40px"}}>
             {isLocal == true ? 
                 <div className={styles.remove} onClick={removeFromPlaylist}>
                     <img src="/img/playlist/delete.svg"/>
@@ -92,8 +92,8 @@ const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavori
                 null
             }
             {(addFavorties || deleteFavorites) ? 
-                <button onClick={handleFavorties}>
-                    {favorties ? <img src='/img/music/inFavorites.png' style={{width:"15px"}}/>:<img src='/img/music/notFavorites.png' style={{width:"15px"}}/>}
+                <button onClick={handleFavorties} className={styles.btn}>
+                    {favorties ? <img src='/img/music/inFavorites.png' style={{width:"15px"}}/>:<img src='/img/music/notFavorites.svg' style={{width:"15px"}}/>}
                 </button>:
                 null
             }

@@ -46,11 +46,11 @@ const Login = () => {
     useEffect(() => {
         if(loginResponse.isSuccess){
             dispatch(login(loginResponse.data))
-            navigate("/profile")
+            navigate(-1)
         }
         if(registerResponse.isSuccess){
             dispatch(login(registerResponse.data))
-            navigate("/profile")
+            navigate(-1)
         }
     },[loginResponse.isSuccess,loginResponse.data,dispatch,registerResponse.isSuccess,registerResponse.data,navigate])
 

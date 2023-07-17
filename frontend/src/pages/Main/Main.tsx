@@ -15,12 +15,12 @@ const Main = () => {
     {
       text: "playlists",
       link: "/playlists/all",
-      imgLink: "/img/burger/favorites.svg"
+      imgLink: "/img/burger/playlist.svg"
     },
     {
       text: "your playlists",
       link: "/playlists/local",
-      imgLink: "/img/burger/favorites.svg"
+      imgLink: "/img/burger/yourPlaylist.svg"
     },
     {
       text: "music",
@@ -30,17 +30,17 @@ const Main = () => {
     {
       text: "your music",
       link: "/music/local",
-      imgLink: "/img/burger/favorites.svg"
+      imgLink: "/img/burger/yourMusic.svg"
     },
     {
       text: "create playlist",
       link: "/create/playlist",
-      imgLink: "/img/burger/favorites.svg"
+      imgLink: "/img/burger/createPlaylist.svg"
     },
     {
       text: "create music",
       link: "/create/music",
-      imgLink: "/img/burger/favorites.svg"
+      imgLink: "/img/burger/createMusic.svg"
     }
   ]
   return (

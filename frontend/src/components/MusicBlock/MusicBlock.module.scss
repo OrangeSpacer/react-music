@@ -8,7 +8,10 @@
 }
 
 .musicBlock {
-    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
     margin-top: 25px;
     &:nth-child(2n){
         margin-top: 15px;
