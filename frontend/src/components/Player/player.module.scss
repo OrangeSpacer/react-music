@@ -1,0 +1,15 @@
+@import "../../styles/variable";
+
+.playerBlock{
+    height: 80px;
+    display: grid;
+    grid-template-columns: 0.4fr 1fr 0.4fr;
+    justify-content: space-between;
+    align-items: center;
+    background: $semi-black;
+}
+
+.volumeBlock{
+    display: flex;
+    justify-content: center;
+}

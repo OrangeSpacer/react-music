@@ -1,14 +1,20 @@
-import { useEffect,useState } from 'react'
-import { IPlayer } from './Player.props'
+import { ChangeEvent, useEffect,useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { pauseMusic, playMusic, setCurrentTrack } from '../../store/features/player/playerSlice'
+import { pauseMusic, playMusic, setCurrentTime, setCurrentTrack, setDuration, setVolumeTrack } from '../../store/features/player/playerSlice'
+import TrackProgress from './TrackProgress/TrackProgress'
 
+import styles from "./player.module.scss"
+import TrackNavigation from './TrackNavigation/TrackNavigation'
+import TrackInfo from './TrackInfo/TrackInfo'
+import TrackVolume from './TrackVolume/TrackVolume'
 
 let audio:HTMLAudioElement
 
-const Player = ({author,imagePath,title}:IPlayer) => {
+const Player = () => {
   const dispatch = useAppDispatch()
-  const {currentTrack,tracks,isPlaying: playTack} = useAppSelector(state => state.playerReducer)
+  const {currentTrack,tracks,isPlaying: playTack,currentTime,durationTrack,volumeTrack} = useAppSelector(state => state.playerReducer)
+  const [currentTimeFormat, setCurrentTimeFormat] = useState("0:0")
+  const [allTimeFormat, setAllTimeFormat] = useState("0:0")
   const [isPlaying,setIsPlaying] = useState<boolean>(false)
 
   useEffect(() => {
@@ -18,11 +24,26 @@ const Player = ({author,imagePath,title}:IPlayer) => {
       }
       audio = new Audio()
       audio.src = "http://127.0.0.1:5000/" + currentTrack?.trackPath
+      setAudio()
+    }
+  },[tracks,currentTrack,dispatch])
+
+  const setAudio = () => {
+    if(currentTrack){
+      audio.onloadedmetadata = () => {
+        setAllTimeFormat(convertTime(audio.duration))
+        dispatch(setDuration(Math.ceil(audio.duration)))
+      }
+      audio.ontimeupdate = () => {
+        setCurrentTimeFormat(convertTime(audio.currentTime))
+        dispatch(setCurrentTime(Math.ceil(audio.currentTime)))
+      }
       audio.play()
+      audio.volume = volumeTrack/100
       dispatch(playMusic())
       setIsPlaying(true)
     }
-  },[tracks,currentTrack,dispatch])
+  }
 
 
   const handleNextTrack = () => {
@@ -57,6 +78,24 @@ const Player = ({author,imagePath,title}:IPlayer) => {
     }
   }
 
+  const handleChnageVolume = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setVolumeTrack(parseInt(e.target.value)))
+    audio.volume = Number(e.target.value) / 100
+  }
+
+  const handleChangeTime = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setCurrentTime(Number(e.target.value)))
+    audio.currentTime = Number(e.target.value)
+  }
+
+  const convertTime = (time: number) => {
+    let sec: string | number = Math.floor( time );
+    let min: string | number = Math.floor( sec / 60 );
+    min = min >= 10 ? min : '0' + min;
+    sec = Math.floor( sec % 60 );
+    sec = sec >= 10 ? sec : '0' + sec;
+    return min + ":"+ sec;
+  }
 
 
   useEffect(() => {
@@ -67,47 +106,22 @@ const Player = ({author,imagePath,title}:IPlayer) => {
     }
   },[playTack])
 
-  console.log("http://127.0.0.1:5000/" + currentTrack?.trackPath)
 
   return (
-    <div style={{color:"white"}}>
-      <div>
+    <div className={styles.playerBlock} style={currentTrack ? {height: "80px", opacity:"1",transition: "all 0.5s ease"}:{visibility: "hidden",height:"0px",opacity:"0",transition: "all 0.5s ease"}}>
+      <div className={styles.trackInfoBlock}>
+        {currentTrack ? <TrackInfo author={currentTrack?.author} title={currentTrack?.title} imgPath={currentTrack?.imagePath}/>: null}
+      </div>
+      <div className={styles.navigationBlock}>
         <div>
-          <img  src={imagePath}/>
+          <TrackNavigation isPlaying={isPlaying} nextTrack={handleNextTrack} prevTrack={handlePrevtrack} startTrack={handlePlay} stopTrack={handlePause}/>
         </div>
         <div>
-          <div>
-            {title}
-          </div>
-          <div>
-            {author}
-          </div>
+          <TrackProgress allTime={allTimeFormat} currentTime={currentTimeFormat} minValue={currentTime} maxValue={durationTrack} onChnage={handleChangeTime}/>
         </div>
       </div>
-      <div>
-        <div>
-          <div>
-            <button onClick={handlePrevtrack}>
-              prev
-            </button>
-          </div>
-          <div>
-            {isPlaying ? 
-              <button onClick={handlePause}>
-                stop
-              </button>:
-              <button onClick={handlePlay}>
-                play
-              </button>
-            }
-          </div>
-          <div onClick={handleNextTrack}>
-            next
-          </div>
-        </div>
-        <div>
-          <div>дорожка</div>
-        </div>
+      <div className={styles.volumeBlock}>
+        <TrackVolume minValue={volumeTrack} maxValue={100} onChange={handleChnageVolume}/>
       </div>
     </div>
   )
