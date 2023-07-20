@@ -4,12 +4,11 @@ import { useAddTrackInPlaylistMutation,useGetLocalPlaylistsSingleQuery} from '..
 
 
 import styles from "./MusicFunc.module.scss"
-import Notification from '../../Notification/Notification'
 import { IPlaylist } from '../../../types/playlist.interface'
 
 const MusicFunc = ({deleteTrack,trackId}: IMusicFuncProps) => {
   const [playlistOpen,setPlaylistOpen] = useState(false)
-  const [addTrack,res] = useAddTrackInPlaylistMutation()
+  const [addTrack] = useAddTrackInPlaylistMutation()
   const {data} = useGetLocalPlaylistsSingleQuery("")
 
 
@@ -17,16 +16,16 @@ const MusicFunc = ({deleteTrack,trackId}: IMusicFuncProps) => {
     addTrack({idPlaylist: idPlaylist, idTrack: trackId})
   }
 
-  console.log(deleteTrack)
 
   return (
     <div className={styles.container}>
-        {res.isSuccess && <Notification message='success' type='success'/>}
-        {res.isError && <Notification message='error' type='error'/>}
-        <div onClick={() => setPlaylistOpen(prev => !prev)} className={styles.openPlaylist}>
-          add to playlist
-        </div>
         {deleteTrack && <div onClick={() => deleteTrack(trackId)}>remove track</div>}
+        <div onClick={() => setPlaylistOpen(prev => !prev)} className={styles.openPlaylist}>
+            <img src="/img/music/left.svg" alt="open arrow" />
+            <span style={{marginLeft: "5px"}}>
+              add to playlist
+            </span>
+        </div>
         {playlistOpen && data.length ? <div className={styles.playlistsBlock}>{data.map((item:IPlaylist) => <div key={item._id} className={styles.playlist} onClick={() => handleAddTrack(item._id)}>{item.title}</div>)}</div>: null}
     </div>
   )

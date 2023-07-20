@@ -55,6 +55,12 @@
     background: transparent;
 }
 
+.funcContainer{
+    width: 150px;
+    right: 20px;
+    position: absolute;
+}
+
 .function {
     background: none;
     border: none;
@@ -75,4 +81,11 @@
 
 .remove{
     cursor: pointer;
+}
+
+
+@media screen and (max-width: 768px)  {
+    .music {
+        padding: 5px 10px;
+    }
 }

@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import Burger from '../../components/Burger/Burger'
 import Player from '../../components/Player/Player'
 
 
+import cn from "classnames"
 import style from "./Main.module.scss";
 import { Outlet } from 'react-router-dom';
 
 const Main = () => {
+  const [burgerOpen,setBurgerOpen] = useState<boolean>(false)
   const burgerLinks = [
     {
       text: "favorites",
@@ -43,10 +46,24 @@ const Main = () => {
       imgLink: "/img/burger/createMusic.svg"
     }
   ]
+
+  const handleOpenBurgerMenu = () => {
+    setBurgerOpen(true)
+  }
+
+  const handleCloseBurger = () => {
+    setBurgerOpen(false)
+  }
+
   return (
     <div className={style.mainBlock}>
-        <div className={style.burger}>
-            <Burger listLink={burgerLinks}/>
+        <div className={style.burgerBtn}>
+          {burgerOpen ? <img src="/img/burger/closeBtn.svg" alt="close" onClick={handleCloseBurger}/>:<img src="/img/burger/burgerBtn.svg" onClick={handleOpenBurgerMenu} alt="open"/>}
+        </div>
+        <div className={cn(style.burger, {
+          [style.burgerMenuOpen]: burgerOpen == true
+        })}>
+            <Burger closeBurgerMenu={handleCloseBurger} listLink={burgerLinks}/>
         </div>
         <div className={style.content}>
             <Outlet/>

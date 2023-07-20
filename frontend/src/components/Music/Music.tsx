@@ -1,6 +1,6 @@
 import Button from '../UI/Button/Button'
 import { IMusic } from './Music.props'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import MusicFunc from './MusicFunc/MusicFunc'
 
 import styles from "./Music.module.scss"
@@ -9,6 +9,7 @@ import { setCurrentTrack } from '../../store/features/player/playerSlice'
 
 
 const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavorites, isLocal,removeFromPlaylist,playMusic, isPlaying = false,pauseMusic}:IMusic) => {
+    const focusElementRef = useRef<HTMLDivElement>(null)
     const [playTrack,setPlayTrack] = useState(isPlaying)
     const [openFunc,setOpenFunc] = useState(false)
     const [favorties, setFavorties] = useState(isFavorites)
@@ -27,6 +28,13 @@ const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavori
     },[isFavorites])
     
     const handleOpen = () => {
+        setOpenFunc(!openFunc)
+        if (focusElementRef.current) {
+            focusElementRef.current.focus()
+        }
+    }
+
+    const handleClose = () => {
         setOpenFunc(!openFunc)
     }
 
@@ -100,7 +108,10 @@ const Music = ({musicData,id,deleteMusic,isFavorites, addFavorties, deleteFavori
             <button className={styles.function} onClick={handleOpen}>
                 <img src="/img/music/function.svg" alt="function" />
             </button>
-            {openFunc === true ? <MusicFunc trackId={id} deleteTrack={deleteMusic} id={musicData._id}/>:null}
+            <div ref={focusElementRef} onBlur={handleClose} tabIndex={0} className={styles.funcContainer}>
+                {openFunc === true ?
+                <MusicFunc trackId={id} deleteTrack={deleteMusic} id={musicData._id}/>:null}
+            </div>
         </div>
     </div>
     )

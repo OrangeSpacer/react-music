@@ -1,12 +1,8 @@
 @import"../../../styles/variable";
 
 .container {
-    border-radius: 5px;
     padding: 10px;
-    width: 150px;
     text-align: center;
-    right: 60px;
-    position: absolute;
     background: $blue;
     color: white;
     font-size: 18px;
@@ -19,10 +15,9 @@
 
 .playlistsBlock{
     background: $blue;
-    border-radius: 5px;
     padding: 10px;
-    right: 170px;
-    top: 0;
+    right: 150px;
+    bottom: 0;
     z-index: 10000;
     position: absolute;
     font-size: 18px;

@@ -5,7 +5,7 @@ import Button from "../UI/Button/Button"
 import styles from "./Burger.module.scss"
 import { useLogouthUserMutation } from "../../store/api/user/user.api"
 
-const Burger = ({listLink}:IBurger): JSX.Element => {
+const Burger = ({listLink,closeBurgerMenu}:IBurger): JSX.Element => {
     const [logout] = useLogouthUserMutation()
     const navigate = useNavigate()
 
@@ -28,7 +28,7 @@ const Burger = ({listLink}:IBurger): JSX.Element => {
         </div>
         <div className={styles.links}>
             {listLink.map(link => 
-                <Link to={link.link} key={link.text} className={styles.linkBlock}>
+                <Link onClick={closeBurgerMenu} to={link.link} key={link.text} className={styles.linkBlock}>
                     <img alt="linkLogo" src={link.imgLink} className={styles.imgLink}/>
                         {link.text}
                 </Link>

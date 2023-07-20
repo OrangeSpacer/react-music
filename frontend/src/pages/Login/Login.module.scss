@@ -60,3 +60,13 @@
     justify-content: center;
     gap: 0 20px;
 }
+
+@media screen and (max-width: 375px) {
+    .input {
+        width: 250px;
+    }
+    .error{
+        font-size: 15px;
+        bottom: -18px;
+    }
+}
