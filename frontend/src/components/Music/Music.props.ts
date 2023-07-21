@@ -12,7 +12,7 @@ export interface IMusic {
     addFavorties?: () => void;
     deleteFavorites?: () => void;
     removeFromPlaylist?: () => void;
-    deleteMusic?: () => void
+    deleteMusic?: () => void;
     addInPlaylist?: () => void;
     deleteInPlaylist?: () => void;
 }

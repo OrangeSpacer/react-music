@@ -104,7 +104,7 @@ const Player = () => {
     } else {
       handlePlay()
     }
-  },[playTack])
+  },[playTack,handlePause,handlePlay])
 
 
   return (

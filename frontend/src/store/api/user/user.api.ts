@@ -44,10 +44,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 credentials: "include"
             })
         }),
-        getInfo: builder.query<any, string>({
-            query: () => "/user/info"
-        }) 
     })
 })
 
-export const {useLoginUserMutation, useRegisterUserMutation, useLogouthUserMutation, useRefreshUserMutation, useGetInfoQuery} = userApiSlice
+export const {useLoginUserMutation, useRegisterUserMutation, useLogouthUserMutation, useRefreshUserMutation} = userApiSlice

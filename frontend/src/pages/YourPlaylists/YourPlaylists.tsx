@@ -23,7 +23,9 @@ const YourPlaylist = () => {
 
     const handleRemovePlaylist = (id: string) => {
       const indexRemove = data?.findIndex(item => item._id == id)
-      dispatch(deletePlaylist(indexRemove))
+      if(typeof indexRemove == "number"){
+        dispatch(deletePlaylist(indexRemove))
+      }
       removePlaylist(id)
     }
 

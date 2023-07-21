@@ -1,15 +1,15 @@
 import Title from '../UI/Title/Title'
 import { IMusicBlock } from './MusicBlock.props'
 import Music from '../Music/Music'
-
-import styles from "./MusicBlock.module.scss"
 import { useAddInFavortiesMutation, useDeleteInFavortiesMutation, useGetAllFavoritesMutation } from '../../store/api/favorites/favorites.api'
 import Loader from '../Loader/Loader'
 import { useCallback, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { removeMusicInPlaylist } from '../../store/features/yourPlaylist/yourPlaylist.slice'
 import { useDeleteTrackFromPlaylistMutation} from '../../store/api/playlist/playlist.api'
-import { pauseMusic, playMusic, setCurrentTrack, setPlayerTracks } from '../../store/features/player/playerSlice'
+import { pauseMusic, playMusic, setPlayerTracks } from '../../store/features/player/playerSlice'
+
+import styles from "./MusicBlock.module.scss"
 
 const MusicBlock = ({musics,title,isLocal,playlistId,deleteMusic}: IMusicBlock) => {
   const {currentTrack,isPlaying,tracks} = useAppSelector(state => state.playerReducer)
@@ -62,7 +62,6 @@ const MusicBlock = ({musics,title,isLocal,playlistId,deleteMusic}: IMusicBlock) 
     dispatch(removeMusicInPlaylist(removeIndex))
   }
 
-  console.log(isPlaying)
   
   return (
     <div>
@@ -70,7 +69,7 @@ const MusicBlock = ({musics,title,isLocal,playlistId,deleteMusic}: IMusicBlock) 
             <Title text={title}/>
         </div>
         <div className={styles.musicBlock}>
-            {res.isSuccess ?  musics.map((music,index) => <Music  playlistId={playlistId} isLocal={isLocal} isPlaying={music._id == currentTrack?._id && isPlaying} deleteMusic={deleteMusic} playMusic={handleSetMusics} pauseMusic={handlePauseMusics} removeFromPlaylist={() => handleRemoveMusic(music._id)} id={music._id} key={music._id} musicData={music} addFavorties={() => handleAddFavorites(music._id)} deleteFavorites={() => handleDeleteFavorties(music._id)}  isFavorites={handleCheckFavorties(music._id)}/>): <Loader/>}
+            {res.isSuccess ?  musics.map((music) => <Music  playlistId={playlistId} isLocal={typeof isLocal == "boolean" && isLocal} isPlaying={music._id == currentTrack?._id && isPlaying} deleteMusic={deleteMusic} playMusic={handleSetMusics} pauseMusic={handlePauseMusics} removeFromPlaylist={() => handleRemoveMusic(music._id)} id={music._id} key={music._id} musicData={music} addFavorties={() => handleAddFavorites(music._id)} deleteFavorites={() => handleDeleteFavorties(music._id)}  isFavorites={handleCheckFavorties(music._id)}/>): <Loader/>}
         </div>
     </div>
   )
