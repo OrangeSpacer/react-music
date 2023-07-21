@@ -3,7 +3,8 @@
 .playerBlock{
     height: 80px;
     display: grid;
-    grid-template-columns: 0.4fr 1fr 0.4fr;
+    grid-template-columns: 100px 1fr 100px;
+    padding: 0 15px;
     justify-content: space-between;
     align-items: center;
     background: $semi-black;
@@ -12,4 +13,20 @@
 .volumeBlock{
     display: flex;
     justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+    .playerBlock{
+        grid-template-columns: 120px 1fr;
+    }
+    .volumeBlock{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .playerBlock{
+        grid-template-columns: 95px 1fr;
+        padding: 0 5px;
+    }
 }

@@ -27,3 +27,15 @@
     font-size: 20px;
     color: $semi-white;
 }
+
+
+@media screen and (max-width: 550px) {
+    .trackInfo{
+        gap: 0 10px;
+        align-items: center;
+    }
+    .imgTrack{
+        width: 30px;
+        height: 30px;
+    }
+}
