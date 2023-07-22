@@ -1,28 +1,28 @@
 @import "../../../styles/variable";
 
 .range[type="range"] {
-    -webkit-appearance: none;
-    width: 80%;
-    height: 7px;
-    background: $white;
-    border-radius: 5px;
-    background-size: 70% 100%;
-    background-repeat: no-repeat;
-    cursor: e-resize;
+	-webkit-appearance: none;
+	width: 80%;
+	height: 7px;
+	background: $white;
+	border-radius: 5px;
+	background-size: 70% 100%;
+	background-repeat: no-repeat;
+	cursor: e-resize;
 }
-  
+
 .range[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 15px;
-    width: 15px;
-    border-radius: 50%;
-    background: $blue;
-    cursor: ew-resize;
+	-webkit-appearance: none;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	background: $blue;
+	cursor: ew-resize;
 }
-  
-.range[type=range]::-webkit-slider-runnable-track  {
-    -webkit-appearance: none;
-    box-shadow: none;
-    border: none;
-    background: transparent;
+
+.range[type="range"]::-webkit-slider-runnable-track {
+	-webkit-appearance: none;
+	box-shadow: none;
+	border: none;
+	background: transparent;
 }

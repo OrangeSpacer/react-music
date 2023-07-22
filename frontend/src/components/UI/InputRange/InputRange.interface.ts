@@ -1,5 +1,5 @@
 export interface IInputRange {
-    minValue: number
-    maxValue: number
-    onChnage: (e: any) => void;
+	minValue: number;
+	maxValue: number;
+	onChnage: (e: any) => void;
 }

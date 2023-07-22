@@ -1,8 +1,8 @@
-import { IMusicData } from "./music.interface"
+import { IMusicData } from "./music.interface";
 
 export interface IPlaylist {
-    author: string
-    title: string
-    tracks: IMusicData[]
-    _id: string
+	author: string;
+	title: string;
+	tracks: IMusicData[];
+	_id: string;
 }

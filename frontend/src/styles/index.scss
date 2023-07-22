@@ -1,19 +1,19 @@
 @import "./variable";
 
 body {
-    height: 100%;
-    margin: 0 auto;
-    background: $main-background;
+	height: 100%;
+	margin: 0 auto;
+	background: $main-background;
 }
 
-.mainBlock{
-    display: grid;
-    grid-template-columns: 0.5fr 1fr;
-    grid-template-rows: 95% 5%;
-    height: 100vh;
+.mainBlock {
+	display: grid;
+	grid-template-columns: 0.5fr 1fr;
+	grid-template-rows: 95% 5%;
+	height: 100vh;
 }
 
 .player {
-    grid-column: 1/3;
-    text-align: center;
+	grid-column: 1/3;
+	text-align: center;
 }

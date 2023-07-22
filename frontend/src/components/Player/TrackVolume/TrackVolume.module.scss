@@ -1,15 +1,14 @@
 @import "../../../styles/variable";
 
-.volumeBlock{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0 5px;
-    width: 200px;
+.volumeBlock {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0 5px;
+	width: 200px;
 }
 
-
-.volume{
-    font-size: 18px;
-    color: $white;
+.volume {
+	font-size: 18px;
+	color: $white;
 }

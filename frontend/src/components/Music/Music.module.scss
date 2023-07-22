@@ -1,91 +1,90 @@
 @import "../../styles/variable";
 
 .music {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid $semi-black;
-    border-radius: 5px;
-    padding: 5px 15px;
-    &:hover{
-        background: $dark-black;
-    }
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	border: 1px solid $semi-black;
+	border-radius: 5px;
+	padding: 5px 15px;
+	&:hover {
+		background: $dark-black;
+	}
 }
 
-.left{
-    display: grid;
-    align-items: center;
-    grid-template-columns: 40px 75px 60px;
-    gap: 15px;
+.left {
+	display: grid;
+	align-items: center;
+	grid-template-columns: 40px 75px 60px;
+	gap: 15px;
 }
 
 .right {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 25px 40px 40px;
-    gap: 15px;
+	display: grid;
+	align-items: center;
+	grid-template-columns: 25px 40px 40px;
+	gap: 15px;
 }
 
-.logo{
-    text-align: center;
-    img {
-        width: 45px;
-        height: 45px;
-    }
+.logo {
+	text-align: center;
+	img {
+		width: 45px;
+		height: 45px;
+	}
 }
 
-.info{
-    display: flex;
-    flex-direction: column;
+.info {
+	display: flex;
+	flex-direction: column;
 }
 
-.title{
-    color: $white;
-    font-size: 20px;
+.title {
+	color: $white;
+	font-size: 20px;
 }
 
-.author{
-    color: $semi-black;
-    font-size: 18px;
+.author {
+	color: $semi-black;
+	font-size: 18px;
 }
 
-.btn{
-    cursor: pointer;
-    border: none;
-    background: transparent;
+.btn {
+	cursor: pointer;
+	border: none;
+	background: transparent;
 }
 
-.funcContainer{
-    width: 150px;
-    right: 20px;
-    position: absolute;
+.funcContainer {
+	width: 150px;
+	right: 20px;
+	position: absolute;
 }
 
 .function {
-    background: none;
-    border: none;
-    border-radius: 100%;
-    transition: all 0.5s ease;
-    img {
-        cursor: pointer;
-        width: 20px;
-        height: 20px;
-        padding: 5px;
-        filter: brightness(0) invert(1);
-    }
-    &:hover {
-        background: $semi-black;
-        transition: all 0.5s ease;
-    }
+	background: none;
+	border: none;
+	border-radius: 100%;
+	transition: all 0.5s ease;
+	img {
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+		padding: 5px;
+		filter: brightness(0) invert(1);
+	}
+	&:hover {
+		background: $semi-black;
+		transition: all 0.5s ease;
+	}
 }
 
-.remove{
-    cursor: pointer;
+.remove {
+	cursor: pointer;
 }
 
-
-@media screen and (max-width: 768px)  {
-    .music {
-        padding: 5px 10px;
-    }
+@media screen and (max-width: 768px) {
+	.music {
+		padding: 5px 10px;
+	}
 }

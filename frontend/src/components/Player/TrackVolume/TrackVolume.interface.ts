@@ -1,5 +1,5 @@
 export interface ITrackVolume {
-    minValue: number
-    maxValue: number
-    onChange: (e) => void;
+	minValue: number;
+	maxValue: number;
+	onChange: (e) => void;
 }

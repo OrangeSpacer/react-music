@@ -1,14 +1,13 @@
 @import "../../../styles/variable";
 
-.trackRange{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+.trackRange {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
 }
 
-
-.time{
-    font-size: 18px;
-    color: $white;
+.time {
+	font-size: 18px;
+	color: $white;
 }

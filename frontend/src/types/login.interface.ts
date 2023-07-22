@@ -1,14 +1,14 @@
 export interface ILogin {
-    token: IToken,
-    user: IUser
+	token: IToken;
+	user: IUser;
 }
 
 interface IToken {
-    accessToken: string,
-    refreshToken: string,
+	accessToken: string;
+	refreshToken: string;
 }
 
 interface IUser {
-    email: string,
-    id: string
+	email: string;
+	id: string;
 }

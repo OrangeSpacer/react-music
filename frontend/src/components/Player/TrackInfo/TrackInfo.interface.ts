@@ -1,5 +1,5 @@
 export interface ITrackInfo {
-    title: string
-    author: string
-    imgPath: string
+	title: string;
+	author: string;
+	imgPath: string;
 }

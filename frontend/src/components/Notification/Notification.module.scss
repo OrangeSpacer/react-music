@@ -1,21 +1,21 @@
 @import "../../styles/variable";
 
 .block {
-    display: inline-block;
-    font-size: 18px;
-    padding: 10px;
-    border-radius: 5px;
-    color: $white;
+	display: inline-block;
+	font-size: 18px;
+	padding: 10px;
+	border-radius: 5px;
+	color: $white;
 }
 
-.error{
-    background: $error;
+.error {
+	background: $error;
 }
 
 .success {
-    background: $sucess;
+	background: $sucess;
 }
 
 .warn {
-    background: $warn;
+	background: $warn;
 }

@@ -1,3 +1,3 @@
 export interface IPlaylistProps {
-    isLocal: boolean
+	isLocal: boolean;
 }
