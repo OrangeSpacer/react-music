@@ -14,7 +14,7 @@ const App = () => {
 		if (localStorage.getItem("token")) {
 			refreshToken("");
 		}
-	}, []);
+	}, [refreshToken]);
 
 	useEffect(() => {
 		if (res.data) {

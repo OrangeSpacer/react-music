@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { Navigate, RouterProvider, createBrowserRouter, useNavigate } from "react-router-dom";
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import Musics from "./pages/Musics/Musics.tsx";
@@ -15,7 +15,7 @@ import AllPlaylists from "./pages/AllPlaylists/AllPlaylists.tsx";
 import Favorites from "./pages/Favorites/Favorites.tsx";
 
 interface IPrivateRote {
-	element: any;
+	element: React.ReactElement;
 }
 
 const PrivateRoute: React.FC<IPrivateRote> = ({ element: Element }) => {

@@ -1,5 +1,7 @@
+import { ChangeEvent } from "react";
+
 export interface IInputRange {
 	minValue: number;
 	maxValue: number;
-	onChnage: (e: any) => void;
+	onChnage: (e: ChangeEvent<HTMLInputElement>) => void;
 }

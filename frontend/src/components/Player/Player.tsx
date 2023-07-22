@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
 	pauseMusic,
@@ -31,18 +31,7 @@ const Player = () => {
 	const [allTimeFormat, setAllTimeFormat] = useState("0:0");
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-	useEffect(() => {
-		if (currentTrack) {
-			if (audio?.src) {
-				audio.src = "";
-			}
-			audio = new Audio();
-			audio.src = "http://127.0.0.1:5000/" + currentTrack?.trackPath;
-			setAudio();
-		}
-	}, [tracks, currentTrack, dispatch]);
-
-	const setAudio = () => {
+	const setAudio = useCallback(() => {
 		if (currentTrack) {
 			audio.onloadedmetadata = () => {
 				setAllTimeFormat(convertTime(audio.duration));
@@ -57,7 +46,18 @@ const Player = () => {
 			dispatch(playMusic());
 			setIsPlaying(true);
 		}
-	};
+	}, [currentTrack, dispatch, volumeTrack]);
+
+	useEffect(() => {
+		if (currentTrack) {
+			if (audio?.src) {
+				audio.src = "";
+			}
+			audio = new Audio();
+			audio.src = "http://127.0.0.1:5000/" + currentTrack?.trackPath;
+			setAudio();
+		}
+	}, [tracks, currentTrack, dispatch, setAudio]);
 
 	const handleNextTrack = () => {
 		const currentId = tracks.findIndex((track) => track._id == currentTrack?._id);
@@ -77,18 +77,19 @@ const Player = () => {
 		}
 	};
 
-	const handlePlay = () => {
+	const handlePlay = useCallback(() => {
 		audio.play();
 		dispatch(playMusic());
 		setIsPlaying(true);
-	};
-	const handlePause = () => {
+	}, [dispatch]);
+
+	const handlePause = useCallback(() => {
 		if (audio) {
 			audio.pause();
 			dispatch(pauseMusic());
 			setIsPlaying(false);
 		}
-	};
+	}, [dispatch]);
 
 	const handleChnageVolume = (e: ChangeEvent<HTMLInputElement>) => {
 		dispatch(setVolumeTrack(parseInt(e.target.value)));
