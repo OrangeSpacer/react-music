@@ -46,7 +46,7 @@ const Player = () => {
 			dispatch(playMusic());
 			setIsPlaying(true);
 		}
-	}, [currentTrack, dispatch, volumeTrack]);
+	}, [currentTrack, dispatch]);
 
 	useEffect(() => {
 		if (currentTrack) {
