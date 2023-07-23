@@ -1,0 +1,30 @@
+@import "../../../styles/variable";
+
+.label {
+	position: relative;
+}
+
+.descr {
+	font-size: 14px;
+	color: $semi-white;
+}
+
+.input {
+	color: $semi-white;
+	padding: 5px 10px;
+	font-size: 18px;
+	border: none;
+	border-radius: 5px;
+	&::placeholder {
+		font-size: 15px;
+		text-transform: capitalize;
+		color: $semi-black;
+	}
+}
+
+.error {
+	left: 0;
+	bottom: -18px;
+	position: absolute;
+	color: $error;
+}

@@ -1,0 +1,24 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/eslint-recommended"
+      ],
+      "plugins": [
+        "@typescript-eslint",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+    "project": true
+    },
+    "root": true,
+    "rules": {
+      "noe-empty-function":"off",
+      "@typescript-eslint/ban-types": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/explicit-function-return-type":"warn",
+      "prettier/prettier": "error"
+    }
+}

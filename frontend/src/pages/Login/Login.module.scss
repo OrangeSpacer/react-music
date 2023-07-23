@@ -1,0 +1,70 @@
+@import "../../styles/variable";
+
+.authorization {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.errorBlock {
+	position: absolute;
+	top: 25%;
+}
+
+.form {
+	margin-top: 100px;
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+}
+
+.descr {
+	font-size: 14px;
+	color: $semi-white;
+}
+
+.label {
+	position: relative;
+}
+
+.input {
+	width: 350px;
+	height: 20px;
+	padding: 5px 10px;
+	font-size: 18px;
+	border: none;
+	border-radius: 5px;
+	&::placeholder {
+		font-size: 15px;
+		text-transform: capitalize;
+		color: $semi-black;
+	}
+}
+
+.errorInput {
+	border: 1px solid $error;
+}
+
+.error {
+	left: 0;
+	bottom: -18px;
+	position: absolute;
+	color: $error;
+}
+
+.loginBtns {
+	display: flex;
+	justify-content: center;
+	gap: 0 20px;
+}
+
+@media screen and (max-width: 375px) {
+	.input {
+		width: 250px;
+	}
+	.error {
+		font-size: 15px;
+		bottom: -18px;
+	}
+}

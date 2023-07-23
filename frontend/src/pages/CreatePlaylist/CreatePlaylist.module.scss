@@ -1,0 +1,22 @@
+.playlistBlock {
+	padding: 15px;
+}
+
+.form {
+	position: relative;
+	margin-top: 150px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.notification {
+	position: absolute;
+	left: 50%;
+	top: -65%;
+	transform: translateX(-50%);
+}
+
+.btnBlock {
+	margin-top: 15px;
+}

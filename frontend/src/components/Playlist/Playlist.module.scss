@@ -1,0 +1,57 @@
+@import "../../styles/variable";
+
+.mainBlock {
+	position: relative;
+}
+
+.link {
+	text-decoration: none;
+}
+
+.playlist {
+	cursor: default;
+	padding: 10px;
+	width: 200px;
+	height: 200px;
+	border-radius: 20px;
+	border: 1px solid $semi-black;
+	background: $semi-black;
+	transition: all 0.5s ease;
+	&:hover {
+		transition: all 0.5s ease;
+		background: $dark-black;
+	}
+}
+
+.content {
+	display: flex;
+	justify-content: space-between;
+}
+
+.imgBlock {
+	text-align: center;
+}
+
+.img {
+	border-radius: 25px;
+	height: 150px;
+	width: 150px;
+}
+
+.title {
+	font-size: 18px;
+	color: $white;
+}
+
+.tracks {
+	font-size: 15px;
+	color: $white;
+}
+
+.deleteBtn {
+	position: absolute;
+	right: 20px;
+	bottom: 25px;
+	z-index: 10000;
+	cursor: pointer;
+}

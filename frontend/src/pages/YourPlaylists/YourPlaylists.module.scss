@@ -1,0 +1,15 @@
+.content {
+	padding: 0 15px;
+}
+
+.playlists {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 25px;
+	overflow-y: visible;
+	justify-content: left;
+}
+
+.link {
+	text-decoration: none;
+}
